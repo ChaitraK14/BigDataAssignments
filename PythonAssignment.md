@@ -1,12 +1,15 @@
 ## Assignment Part-1
 Q1. Why do we call Python as a general purpose and high-level programming language?
+
 A:  Python is called general purpose as it can be used for wide variety of applications and its is not specialized for any specific problem. 
     Python is a high-level programming language because it is very easy to code and understand. 
 
 Q2. Why is Python called a dynamically typed language?
+
 A:  There is no need to declare the type of variable explicitly while writing the program, the type is determined during runtime.
 
 Q3. List some pros and cons of Python programming language?
+
 A:  Pros:
 * Python is User friendly language. It is very easy to code and understand.
 * Python has a vast collection of libraries.
@@ -17,6 +20,7 @@ A:  Pros:
 * High memory consumption.
 
 Q4. In what all domains can we use Python?
+
 A:  * Data Science
     * Machine Learning
     * Deep Learning
@@ -26,20 +30,25 @@ A:  * Data Science
     * Game Development to Web Development.
 
 Q5. What are variable and how can we declare them?
+
 A: Name given to an object is called variable. In python, a variable is created the moment a value is assigned to it.
    
    Ex: a = 15
 
 Q6. How can we take an input from the user in Python? 
+
 A:  User input can be taken using the function : input().
 
 Q7. What is the default datatype of the value that has been taken as an input using input() function?
+
 A:  default datatype is string.
 
 Q8. What is type casting?
+
 A:  type casting is changing the datatypes of the variables.
 
 Q9. Can we take more than one input from the user using single input() function? If yes, how? If no, why?
+
 A:  Yes, we can take more than one input from input() function by using split() method.
 
 Ex: a,b = input("Enter 2 nums:").split()
@@ -47,21 +56,27 @@ Ex: a,b = input("Enter 2 nums:").split()
     print("Value of b:",b)
 
 Q10. What are keywords?
+
 A:  keywords are special reserved words that have specific meanings and purposes and can't be used for anything but those specific purposes.
 
 Q11. Can we use keywords as a variable? Support your answer with reason.
+
 A: No, we cannot use keywords as a variable because keywords are specially reserved words that are used for specific purposes.
 
 Q12. What is indentation? What's the use of indentaion in Python?
+
 A:  Indentation is spaces at beginning of code line. Indentation in python indicates that the codelines belongs to specific block of code. 
 
 Q13. How can we throw some output in Python?
+
 A:  using print() function.
 
 Q14. What are operators in Python?
+
 A:  Operators are those symbols that perform specific computation or operations on variables in python. 
 
 Q15. What is difference between / and // operators?
+
 A:  / is a division operator which gives float result.
     // is also a division operator but gives integer result.
 
@@ -69,10 +84,15 @@ Q16. Write a code that gives following as an output.
 ```
 iNeuroniNeuroniNeuroniNeuron
 ```
+
 A:  print("iNeuron"* 4)
 
 Q17. Write a code to take a number as an input from the user and check if the number is odd or even.
+
 A:  
+
+
+
     num = float(input("Enter a number:"))
     if num % 2 ==0:
       print("Even number")
@@ -80,6 +100,7 @@ A:
       print("Odd number")
 
 Q18. What are boolean operator?
+
 A:  Boolean Operators are those that result in the Boolean values of True and False.
     and, or and not are used as boolean operators which may evaluate to true or false.
 
@@ -93,21 +114,28 @@ True and False and True
 
 1 or 0 or 0
 ```
+
 A: 1
    0
    False
    1
 
 Q20. What are conditional statements in Python?
+
 A:  Conditional statements are used to make decision based on certain condition. these statements control the flow of exectution.
 
 Q21. What is use of 'if', 'elif' and 'else' keywords?
+
 A:  'if' condition is checked first.
     'elif' condition is checked when if condition is unsatisfied.
     'else' condition is checked when all the above conditions are unsatisfied.
 
 Q22. Write a code to take the age of person as an input and if age >= 18 display "I can vote". If age is < 18 display "I can't vote".
+
 A:  
+
+
+
       age = int(input("My age:"))
       if age>=18:
           print("I can vote")
