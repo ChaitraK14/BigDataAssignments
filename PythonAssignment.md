@@ -578,29 +578,65 @@ Q91. Write a Python program to merge two dictionary.
 A:
 
 
+     def merge_dictionary(dict_1,dict_2):
+         dict_1.update(dict_2)
+         print("dictionary after merging:",dict_1)
+
+     d1={"a":[1,2],"b":[4,5]}
+     d2={"c":[7,8],"d":[3,6]}
+     merge_dictionary(d1,d2)
+
+
 Q92. Write a Python program to convert a list of tuples into dictionary.
 ```
 Input : [('Sachin', 10), ('MSD', 7), ('Kohli', 18), ('Rohit', 45)]
 Output : {'Sachin': 10, 'MSD': 7, 'Kohli': 18, 'Rohit': 45}
 ```
+A:
+
+
+print(dict([('Sachin', 10), ('MSD', 7), ('Kohli', 18), ('Rohit', 45)]))
 
 Q93. Write a Python program to create a list of tuples from given list having number and its cube in each tuple.
 ```
 Input: list = [9, 5, 6]
 Output: [(9, 729), (5, 125), (6, 216)]
 ```
+A:
+
+     l = [9, 5, 6]
+     list_of_tuple=[]
+     for i in l:
+         list_of_tuple.append((i,i**3))
+     print(list_of_tuple)
+
 
 Q94. Write a Python program to get all combinations of 2 tuples.
 ```
 Input : test_tuple1 = (7, 2), test_tuple2 = (7, 8)
 Output : [(7, 7), (7, 8), (2, 7), (2, 8), (7, 7), (7, 2), (8, 7), (8, 2)]
 ```
+A:
+
+
+     output=[(i,j) for i in test_tuple1 for j in test_tuple2]+[(j,1) for i in test_tuple2 for j in test_tuple1]
+     print(output)
 
 Q95. Write a Python program to sort a list of tuples by second item.
 ```
 Input : [('for', 24), ('Geeks', 8), ('Geeks', 30)] 
 Output : [('Geeks', 8), ('for', 24), ('Geeks', 30)]
 ```
+A:
+
+
+t=[('for', 24), ('Geeks', 8), ('Geeks', 30)] 
+for j in range(0,len(t)):
+    for i in range(0,len(t)-1):
+        if t[i][1]>t[i+1][1]:
+            t[i],t[i+1]=t[i+1],t[i]
+
+print(t)
 
 Q96. Write a python program to print below pattern.
 ```
@@ -610,6 +646,12 @@ Q96. Write a python program to print below pattern.
 * * * * 
 * * * * * 
 ```
+A:
+
+n=5
+for i in range(1,n+1):
+    print('* '*i)
+    
 Q97. Write a python program to print below pattern.
 ```
     *
@@ -618,7 +660,12 @@ Q97. Write a python program to print below pattern.
  ****
 *****
 ```
+A:
 
+
+n=5
+for i in range(1,n+1):
+    print(' '*(n+1-i)+'*'*i)
 Q98. Write a python program to print below pattern.
 ```
     * 
@@ -627,6 +674,12 @@ Q98. Write a python program to print below pattern.
  * * * * 
 * * * * * 
 ```
+A:
+
+
+n=5
+for i in range(1,n+1):
+    print(' '*(n+1-i)+'* '*i)
 
 Q99. Write a python program to print below pattern.
 ```
@@ -636,6 +689,14 @@ Q99. Write a python program to print below pattern.
 1 2 3 4 
 1 2 3 4 5
 ```
+A:
+
+
+n=5
+for j in range(1,n+1):
+    for i in range(1,j+1):
+        print(i,end=" ")
+    print("\r")
 
 Q100. Write a python program to print below pattern.
 ```
@@ -645,3 +706,9 @@ C C C
 D D D D 
 E E E E E 
 ```
+A:
+
+
+n=5
+for i in range(1,n+1):
+    print((chr(64+i)+" ")*i)
