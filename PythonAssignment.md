@@ -562,6 +562,8 @@ A:
 Q90. Write a Python program to extract unquire dictionary values.
 A:
 
+
+
      def unique_dict_values(d):
          unique_list=[]
          for v in d.values():
