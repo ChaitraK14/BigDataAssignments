@@ -30,7 +30,7 @@ A: Name given to an object is called variable. In python, a variable is created 
    
    Ex: a = 15
 
-Q6. How can we take an input from the user in Python?
+Q6. How can we take an input from the user in Python? 
 A:  User input can be taken using the function : input().
 
 Q7. What is the default datatype of the value that has been taken as an input using input() function?
