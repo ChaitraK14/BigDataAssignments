@@ -115,10 +115,13 @@ True and False and True
 1 or 0 or 0
 ```
 
-A: 1
-   0
-   False
-   1
+A: 
+
+
+     1
+     0
+     False
+     1
 
 Q20. What are conditional statements in Python?
 
@@ -146,10 +149,15 @@ Q23. Write a code that displays the sum of all the even numbers from the given l
 ```
 numbers = [12, 75, 150, 180, 145, 525, 50]
 ```
-A:  print(sum([x for x in numbers if x%2==0]))
+A: 
+
+
+print(sum([x for x in numbers if x%2==0]))
 
 Q24. Write a code to take 3 numbers as an input from the user and display the greatest no as output.
-A:  
+A: 
+
+
       x,y,z = input("Enter 3 numbers:").split()
       
       if int(x)>int(y) and int(x)>int(z):
@@ -170,6 +178,9 @@ Q25. Write a program to display only those numbers from a list that satisfy the 
 numbers = [12, 75, 150, 180, 145, 525, 50]
 ```
 A:  
+
+
+
     result = []
     for n in numbers:
       if n > 150:
@@ -181,9 +192,11 @@ A:
     print(result)
 
 Q26. What is a string? How can we declare string in Python?
+
 A:  String is an array of bytes representing unicode characters. strings are declared in single or double quotation marks.
 
 Q27. How can we access the string using its index?
+
 A:  square brackets are used to access the string elements.
 
 Q28. Write a code to get the desired output of the following
@@ -191,7 +204,7 @@ Q28. Write a code to get the desired output of the following
 string = "Big Data iNeuron"
 desired_output = "iNeuron"
 ```
-A:  print(string[9:)
+A:  print(string[9:])
 
 Q29. Write a code to get the desired output of the following
 ```
@@ -201,12 +214,15 @@ desired_output = "norueNi"
 A:  print(string[:7:-1])
 
 Q30. Resverse the string given in the above question.
+
 A:  print(string[::-1])
 
 Q31. How can you delete entire string at once?
+
 A:   Entire string can be deleted using del keyword. 
 
 Q32. What is escape sequence?
+
 A:   backslash(\) is an escape character used, when we need to insert an illegal charater in a string. For example, double quotes cannot be inserted in a string, but this can be done by inserting a backslash followed by double quotes inside the string.
 
 Q33. How can you print the below string?
@@ -218,12 +234,15 @@ A:   print("'iNeuron's Big Data Course'")
      print('\'iNeuron\'s Big Data Course\'')
 
 Q34. What is a list in Python?
+
 A:   list is a sequence of elements stored in a single variable, the elements can be of diffrent types.
 
 Q35. How can you create a list in Python?
+
 A:   list can be created using square barckets([]) and the elements are stored seperated by commas inside the square barckets.
 
 Q36. How can we access the elements in a list?
+
 A:   list elements can be accesed by the indexing.
 
 Q37. Write a code to access the word "iNeuron" from the given list.
@@ -233,6 +252,7 @@ lst = [1,2,3,"Hi",[45,54, "iNeuron"], "Big Data"]
 A:   print(lst[4][2])
 
 Q38. Take a list as an input from the user and find the length of the list.
+
 A:   lst = list(input("Enter elements of a list seperated by space: ").split(" "))
      print(len(lst))
 
@@ -240,61 +260,86 @@ Q39. Add the word "Big" in the 3rd index of the given list.
 ```
 lst = ["Welcome", "to", "Data", "course"]
 ```
-A:    lst.insert(2,"Big")
-      print(lst)
+A: 
+
+
+     lst.insert(2,"Big")
+     print(lst)
 
 Q40. What is a tuple? How is it different from list?
+
 A:   Tuple is sequence of python objects stored in a single variable. Tuples are same as lists but immutable where as lists are mutable. 
 
 Q41. How can you create a tuple in Python?
+
 A:   A tuple is created by placing all the items (elements) inside parentheses () , separated by commas.
 
 Q42. Create a tuple and try to add your name in the tuple. Are you able to do it? Support your answer with reason.
+
 A:   Name cannot be added in tuple once after created, as tuple is immutable.
 
 Q43. Can two tuple be appended. If yes, write a code for it. If not, why?
+
 A:   Yes, tuples can be appended.
+
+
 
 Ex: tup_1 = (2,4,6)
     tup_2 = (1,3,5)
     print(tup_1+tup_2)
 
 Q44. Take a tuple as an input and print the count of elements in it.
+
 A:   tup = tuple(input("Enter elements of a tuple seperated by space: ").split(" "))
      print(len(tup))
 
 Q45. What are sets in Python?
+
 A:   Sets are used to store multiple items in a single variable. A set is a collection which is unordered, unchangeable(but items can be removed and new items can be added), unindexed ad always contains unique items.
 
 Q46. How can you create a set?
+
 A:   Sets can be created with items seperated by commas, surrounded by curly braces {}.
 
 Q47. Create a set and add "iNeuron" in your set.
-A:   
+
+A:
+
+
      s = {'iNeuron'}
      print(s)
 
 Q48. Try to add multiple values using add() function.
+
 A:   
+
+
      s.add('Python')
      s.add('Bigdata')
      print(s)
         
 
 Q49. How is update() different from add()?
+
 A:   Using add() we can only add a single item but update() can be used to add multiple items at a time and also for adding items from another set (or any other iterable).
 
 Q50. What is clear() in sets?
+
 A:   The clear() method removes all elements in a set
 
 Q51. What is frozen set?
+
 A:   Frozen set is an immutable version of a Python set object. While elements of a set can be modified at any time, elements of the frozen set remains the same after creation.
 
 Q52. How is frozen set different from set?
+
 A:   Sets are mutable but frozen sets are immutable, which implies no items can be added or removed from frozen set.
 
 Q53. What is union() in sets? Explain via code.
+
 A:   union() method returns a new set which contains all the elements from the original sets without any duplicates.
+        
+        
         
      set1 = {2,4,6,8,1}
      set2 = {1,3,5,7,2}
@@ -303,7 +348,10 @@ A:   union() method returns a new set which contains all the elements from the o
      Union of set1 and set2 returns all the elements from set1 and set2 without any duplicates.
      
 Q54. What is intersection() in sets? Explain via code.
+
 A:   intersection() method returns a new set which contains only common items between the sets.
+
+
 
      set1 = {2,4,6,8,1}
      set2 = {1,3,5,7,2}
@@ -313,12 +361,15 @@ A:   intersection() method returns a new set which contains only common items be
      Intersection of set1, set2 and set3 returns common elements present in all 3 sets, that is {1, 2}.
 
 Q55. What is dictionary ibn Python?
+
 A:   A dictionary consists of a collection of key-value pairs. Each key-value pair maps the key to its associated value.
 
 Q56. How is dictionary different from all other data structures.
+
 A:   Dictionary stores elements as a key-value pairs while other data structures stores elements as a single value.
 
 Q57. How can we delare a dictionary in Python?
+
 A:   Dictionary are declared using curly braces {}.key value pairs are seperates using colon : and each pairs are seperated by commas.
 
 Q58. What will the output of the following?
@@ -329,85 +380,117 @@ print(type(var))
 A:   <class 'dict'>
 
 Q59. How can we add an element in a dictionary?
+
 A:   
+
+
      val ={}
      val['name'] ="xyz"
      val['age'] = 29
      print(val)
 
 Q60. Create a dictionary and access all the values in that dictionary.
+
 A:
+
+
      val ={"Name":"xyz","Age":29,"Country":"India"}
      for k,v in val.items():
          print("Key is", k ,"and Value is",v)
 
 Q61. Create a nested dictionary and access all the element in the inner dictionary.
-A:   
+
+A:  
+
+
      Employees ={"Employee1":{"Name":"chris","Age":28},"Employee2":{"Name":"Sam","Age":32}}
      for k,v in Employees["Employee1"].items():
          print("Key is", k ,"and Value is",v)
 
 Q62. What is the use of get() function?
+
 A:   get() function is used to access the values in a dictionary using a key.
      
      val ={"Name":"xyz","Age":29,"Country":"India"}
      print(val.get("Name"))
      
 Q63. What is the use of items() function?
+
 A:   items() function is used to get list of all the key values of dictionary.
+
+
 
      val ={"Name":"xyz","Age":29,"Country":"India"}
      print(val.items())
 
 Q64. What is the use of pop() function?
+
 A:   pop() is used to remove the element from the dictionary by dict key and return the value related to the removed key.
-     
+
+
+
      val ={"Name":"xyz","Age":29,"Country":"India"}
      popped_value = val.pop("Name")
 
 Q65. What is the use of popitems() function?
+
 A:   popitem() removes and returns the item that was last inserted into the dictionary.
+
+
 
      val ={"Name":"xyz","Age":29,"Country":"India"}
      popped_value = val.popitem()
 
 Q66. What is the use of keys() function?
+
 A:   keys() function returns a view object that displays a list of all the keys present in a dictionary.
+
+
 
      val ={"Name":"xyz","Age":29,"Country":"India"}
      print(val.keys())
 
 Q67. What is the use of values() function?
+
 A:   values() function returns a view object that displays a list of all the values present in a dictionary.
 
      val ={"Name":"xyz","Age":29,"Country":"India"}
      print(val.values())
 
 Q68. What are loops in Python?
+
 A:   loops are used to iterate over a block of code over and over until a particular condition is satisfied.
 
 Q69. How many type of loop are there in Python?
+
 A:   Two types of loops are there is python: for and while.
 
 Q70. What is the difference between for and while loops?
+
 A:   for loop is used when the number of iterations is known, whereas execution is done in the while loop until the statement in the program is proved wrong.
 
 Q71. What is the use of continue statement?
+
 A:   continue statement passes the flow of exrcution to next iteration.
 
 Q72. What is the use of break statement?
+
 A:   break statement forces the flow to execution to come out of the loop.
 
 Q73. What is the use of pass statement?
+
 A:   pass statement passes the flow of execution to next line.Empty code is not allowed in loops, function definitions, class definitions, or in if statements hence pass can be used there to avoid error.
 
 Q74. What is the use of range() function?
+
 A:   The range() function returns a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and stops before a specified number.
      range(start,stop,step)
      we can give start, stop and step values to get a sequence.
 
 Q75. How can you loop over a dictionary?
 A:   
+
+
      val ={"Name":"xyz","Age":29,"Country":"India"}
      for k,v in val.items():
          print("Key is", k ,"and Value is",v)
@@ -415,7 +498,11 @@ A:
 
 ### Coding problems
 Q76. Write a Python program to find the factorial of a given number.
+
 A:
+
+
+
     def factorial(n):
         if n<0:
             return(0)
@@ -429,7 +516,11 @@ A:
         return(fact)
 
 Q77. Write a Python program to calculate the simple interest. Formula to calculate simple interest is SI = (P*R*T)/100
-A:   
+
+A:  
+
+
+
      def SI(P,R,T):
          si = P*R*T/100
          return(si)
@@ -437,7 +528,11 @@ A:
      print("Simple Interest is",SI(1000,5.5,2))
 
 Q78. Write a Python program to calculate the compound interest. Formula of compound interest is A = P(1+ R/100)^t.
-A:   
+
+A:  
+
+
+
      def CI(P,R,T):
          A = P*(1+R/100)**T
          ci = A-P
@@ -446,7 +541,11 @@ A:
      print("Compound Interest is",CI(1000, 5.5, 2))
 
 Q79. Write a Python program to check if a number is prime or not.
-A:   
+
+A:
+
+
+
      from math import sqrt
 
      def is_prime(n):
@@ -468,7 +567,11 @@ A:
 
 
 Q80. Write a Python program to check Armstrong Number.
-A:   
+
+A:  
+
+
+
      def is_armstrong(n):
          l = len(str(n))
          s = 0 
@@ -482,7 +585,11 @@ A:
      is_armstrong(371)
 
 Q81. Write a Python program to find the n-th Fibonacci Number.
+
 A:
+
+
+
      def fibonacci(n):
          if n<=0:
              print("Invalid")
@@ -497,7 +604,11 @@ A:
      print(f"{n}th fibonacci number is {fibonacci(8)}")
 
 Q82. Write a Python program to interchange the first and last element in a list.
+
 A:
+
+
+
      def swap_list(l):
          temp=l[0]
          l[0]=l[-1]
@@ -508,7 +619,11 @@ A:
      print(swap_list(l))
 
 Q83. Write a Python program to swap two elements in a list.
+
 A:
+
+
+
      def swap_list(l,pos_1,pos_2):
          temp=l[pos_1]
          l[pos_1]=l[pos_2]
@@ -519,7 +634,11 @@ A:
      print(swap_list(l,2,4))
 
 Q84. Write a Python program to find N largest element from a list.
+
 A:
+
+
+
      def n_largest(L,N):
          max_list=[]
          for j in range(0,N):
@@ -535,7 +654,11 @@ A:
      n_largest([1,3,5,7,2,4,6],3)
 
 Q85. Write a Python program to find cumulative sum of a list.
+
 A:
+
+
+
      def cum_sum(L):
          sum=0
          sum_list=[]
@@ -548,7 +671,11 @@ A:
      cum_sum([1,3,5,7,2,4,6])
 
 Q86. Write a Python program to check if a string is palindrome or not.
+
 A:
+
+
+
      def is_palindrome(s):
          if s==s[::-1]:
              print(f"{s} is palindrome")
@@ -558,7 +685,11 @@ A:
      is_palindrome("abccba")
 
 Q87. Write a Python program to remove i'th element from a string.
+
 A:
+
+
+
      def rm_ith_element(s,i):
          new_str=s[:i]+s[i+1:]
          print(f"string after removing {i}th element: {new_str}")
@@ -566,7 +697,11 @@ A:
      rm_ith_element("abcdefg",3)
 
 Q88. Write a Python program to check if a substring is present in a given string.
+
 A:
+
+
+
      def check_substring(str,sub_str):
          if sub_str in str:
              print(f'"{sub_str}" is a substring of "{str}"')
@@ -576,7 +711,11 @@ A:
      check_substring("Happy new year!!!","new")
 
 Q89. Write a Python program to find words which are greater than given length k.
+
 A:
+
+
+
      def str_greater_than_k(s,k):
          new_list=[]
          words_list = s.split(" ")
@@ -588,6 +727,7 @@ A:
      str_greater_than_k("Welcome to my home",3)
 
 Q90. Write a Python program to extract unquire dictionary values.
+
 A:
 
 
@@ -603,7 +743,9 @@ A:
      unique_dict_values(d)
 
 Q91. Write a Python program to merge two dictionary.
+
 A:
+
 
 
      def merge_dictionary(dict_1,dict_2):
@@ -623,7 +765,8 @@ Output : {'Sachin': 10, 'MSD': 7, 'Kohli': 18, 'Rohit': 45}
 A:
 
 
-print(dict([('Sachin', 10), ('MSD', 7), ('Kohli', 18), ('Rohit', 45)]))
+
+     print(dict([('Sachin', 10), ('MSD', 7), ('Kohli', 18), ('Rohit', 45)]))
 
 Q93. Write a Python program to create a list of tuples from given list having number and its cube in each tuple.
 ```
@@ -631,6 +774,8 @@ Input: list = [9, 5, 6]
 Output: [(9, 729), (5, 125), (6, 216)]
 ```
 A:
+
+
 
      l = [9, 5, 6]
      list_of_tuple=[]
@@ -647,6 +792,7 @@ Output : [(7, 7), (7, 8), (2, 7), (2, 8), (7, 7), (7, 2), (8, 7), (8, 2)]
 A:
 
 
+
      output=[(i,j) for i in test_tuple1 for j in test_tuple2]+[(j,1) for i in test_tuple2 for j in test_tuple1]
      print(output)
 
@@ -658,13 +804,14 @@ Output : [('Geeks', 8), ('for', 24), ('Geeks', 30)]
 A:
 
 
-t=[('for', 24), ('Geeks', 8), ('Geeks', 30)] 
-for j in range(0,len(t)):
-    for i in range(0,len(t)-1):
-        if t[i][1]>t[i+1][1]:
-            t[i],t[i+1]=t[i+1],t[i]
 
-print(t)
+     t=[('for', 24), ('Geeks', 8), ('Geeks', 30)] 
+     for j in range(0,len(t)):
+         for i in range(0,len(t)-1):
+             if t[i][1]>t[i+1][1]:
+                 t[i],t[i+1]=t[i+1],t[i]
+
+     print(t)
 
 Q96. Write a python program to print below pattern.
 ```
@@ -676,9 +823,11 @@ Q96. Write a python program to print below pattern.
 ```
 A:
 
-n=5
-for i in range(1,n+1):
-    print('* '*i)
+
+
+     n=5
+     for i in range(1,n+1):
+         print('* '*i)
     
 Q97. Write a python program to print below pattern.
 ```
@@ -691,9 +840,11 @@ Q97. Write a python program to print below pattern.
 A:
 
 
-n=5
-for i in range(1,n+1):
-    print(' '*(n+1-i)+'*'*i)
+
+     n=5
+     for i in range(1,n+1):
+         print(' '*(n+1-i)+'*'*i)
+         
 Q98. Write a python program to print below pattern.
 ```
     * 
@@ -705,9 +856,10 @@ Q98. Write a python program to print below pattern.
 A:
 
 
-n=5
-for i in range(1,n+1):
-    print(' '*(n+1-i)+'* '*i)
+
+     n=5
+     for i in range(1,n+1):
+         print(' '*(n+1-i)+'* '*i)
 
 Q99. Write a python program to print below pattern.
 ```
@@ -720,11 +872,12 @@ Q99. Write a python program to print below pattern.
 A:
 
 
-n=5
-for j in range(1,n+1):
-    for i in range(1,j+1):
-        print(i,end=" ")
-    print("\r")
+
+     n=5
+     for j in range(1,n+1):
+         for i in range(1,j+1):
+             print(i,end=" ")
+         print("\r")
 
 Q100. Write a python program to print below pattern.
 ```
@@ -738,6 +891,6 @@ A:
 
 
 
-n=5
-for i in range(1,n+1):
-    print((chr(64+i)+" ")*i)
+     n=5
+     for i in range(1,n+1):
+         print((chr(64+i)+" ")*i)
