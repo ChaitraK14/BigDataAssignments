@@ -87,22 +87,40 @@ A: If we don't do anything to treat an exception, we will get an error and the e
 
 Q20. What are your options for recovering from an exception in your script?
 
-A: 
+A:1. We can place the code which may cause exception in try block. After a try block, include an except: statement, followed by a block of code which handles the problem.A single try statement can have multiple except statements.We can provide generic except statement which can handle any type of exception.
+2.After the except clause(s), we can include an else-clause. The code in the else-block executes if the code in the try: block does not raise an exception.
+3.WE can use a finally: block along with a try: block. The finally block is a place to put any code that must execute, whether the try-block raised an exception or not.
 
 Q21. Describe two methods for triggering exceptions in your script.
+
+A: 1. raise keyword: We can use the “raise” keyword to throw a Python exception manually. We can also add a message to describe the exception.
+   2. assert keyword: assert keyword let us test if a condition in our code returns True, if not, the program will raise an AssertionError.
 
 Q22. Identify two methods for specifying actions to be executed at termination time, regardless of  
 whether or not an exception exists.
 
+A: 1. We can place the action to be executed outside the try except block.
+   2. We can place the code in finally block.
+
 Q23. What is the purpose of the try statement?
+
+A: The try block is used to check some code for errors i.e the code inside the try block will execute when there is no error in the program.
 
 Q24. What are the two most popular try statement variations?
 
+A: There are two other optional segments to a try block: else and finally . Both of these optional blocks will come after the try and the except .
+
 Q25. What is the purpose of the raise statement?
+
+A: Raise statement is used to throw a Python exception manually. We can also add a message to describe the exception.
 
 Q26. What does the assert statement do, and what other statement is it like?
 
+A: assert statement let us test if a condition in our code returns True, if not, the program will raise an AssertionError. It is like the raise statement.
+
 Q27. What is the purpose of the with/as argument, and what other statement is it like?
+
+A: with statement is used in exception handling to make the code cleaner and much more readable. It simplifies the management of common resources like file streams.It is like try-except statement.
 
 Q28. What are *args, **kwargs?
 
