@@ -124,16 +124,31 @@ A: with statement is used in exception handling to make the code cleaner and muc
 
 Q28. What are *args, **kwargs?
 
+A: *args and **kwargs are special keyword which allows function to take variable length argument.
+*args passes variable number of non-keyworded arguments and on which operation of the tuple can be performed.
+**kwargs passes variable number of keyword arguments dictionary to function on which operation of a dictionary can be performed.
+
 Q29. How can I pass optional or keyword parameters from one function to another?
+
+A: Collect the arguments using the * and ** specifiers in the functions parameter list, this gives us the positional arguments as a tuple and the keyword arguments as a dictionary. Then we can pass these arguments when calling another function by using * and **.
 
 Q30. What are Lambda Functions?
 
+A: A lambda function is an anonymous function, that can take any number of arguments but, unlike normal functions, evaluates and returns only one expression.
+
 Q31. Explain Inheritance in Python with an example?
+
+A:Inheritance is a mechanism through which we create a class or object based on another class or object. In other words, the new objects will have all the features or attributes of the class or object on which they are based. We refer to the created class as the derived or child class, and the class from which it inherits is the base or parent class.
 
 Q32. Suppose class C inherits from classes A and B as class C(A,B).Classes A and B both have their own versions of method func(). If we call func() from an object of 
 class C, which version gets invoked?
 
+A: class A
+
 Q33. Which methods/functions do we use to determine the type of instance and inheritance?
+
+A: The isinstance() method checks whether an object is an instance of a class.
+issubclass() method checks whether one class is a subclass of another class (or other classes).
 
 Q34.Explain the use of the 'nonlocal' keyword in Python.
 
