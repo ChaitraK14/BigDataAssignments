@@ -69,15 +69,25 @@ A: When one or both operands are of a user-defined class or structure type, oper
 
 Q16. What is the most popular form of operator overloading?
 
-A:
+A: The most popular instance is the adding up operator '+', where it can be used for the usual addition and also for combining two different strings.
 
 Q17. What are the two most important concepts to grasp in order to comprehend Python OOP code?
 
+A: The most important concepts are:
+   1. Inheritance : OOP allows us to create a class(child class) based on another class(parent class).The child class copies the attributes (both data and procedural) from the parent class. This concept is called inheritance.
+   2. Polymorphism : The function with same name behaves differently for different type of objects.
+
 Q18. Describe three applications for exception processing.
+
+A: 
 
 Q19. What happens if you don't do something extra to treat an exception?
 
+A: If we don't do anything to treat an exception, we will get an error and the execution stops there itself.
+
 Q20. What are your options for recovering from an exception in your script?
+
+A: 
 
 Q21. Describe two methods for triggering exceptions in your script.
 
