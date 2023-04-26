@@ -152,4 +152,8 @@ issubclass() method checks whether one class is a subclass of another class (or 
 
 Q34.Explain the use of the 'nonlocal' keyword in Python.
 
+A: The nonlocal keyword is used in nested functions to reference a variable in the parent function. The nonlocal keyword won’t work on local or global variables and therefore must be used to reference variables in another scope except the global and local one.
+
 Q35. What is the global keyword?
+
+A: Global keyword is used inside a function only when we want to do assignments or when we want to change a variable. 
