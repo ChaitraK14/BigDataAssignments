@@ -15,7 +15,7 @@ A: 1.Class objects represent the class itself, while instance objects represent 
 
 Q4. What makes the first argument in a class’s method function special?
 
-A: First argument in the class's method function is SELF. It always points to the current object. By using the “self”  we can access the attributes and methods of the class in python. It binds the attributes with the given arguments.
+A: First argument in the class's method function is SELF. It always points to the current object. By using the “self”  we can access the attributes and methods of the class in python.      It binds the attributes with the given arguments.
 
 Q5. What is the purpose of the init method?
 
@@ -74,11 +74,11 @@ A: "self" in a python class is a reference to the current instance of the class,
 
 Q14. How does a Python class handle operator overloading?
 
-A: The operator overloading in Python means provide extended meaning beyond their predefined operational meaning. Such as, we use the "+" operator for adding two integers as well as joining two strings or merging two lists. We can achieve this as the "+" operator is overloaded by the "int" class and "str" class.
+A: The operator overloading in Python means provide extended meaning beyond their predefined operational meaning. Such as, we use the "+" operator for adding two integers as well as        joining two strings or merging two lists. We can achieve this as the "+" operator is overloaded by the "int" class and "str" class.
 
 Q15. When do you consider allowing operator overloading of your classes?
 
-A: When one or both operands are of a user-defined class or structure type, operator overloading makes it easier to specify user-defined implementation for such operations. This makes user-defined types more similar to the basic primitive data types in terms of behaviour.
+A: When one or both operands are of a user-defined class or structure type, operator overloading makes it easier to specify user-defined implementation for such operations. This makes      user-defined types more similar to the basic primitive data types in terms of behaviour.
 
 Q16. What is the most popular form of operator overloading?
 
@@ -87,14 +87,14 @@ A: The most popular instance is the adding up operator '+', where it can be used
 Q17. What are the two most important concepts to grasp in order to comprehend Python OOP code?
 
 A: The most important concepts are:
-   1. Inheritance : OOP allows us to create a class(child class) based on another class(parent class).The child class copies the attributes (both data and procedural) from the parent class. This concept is called inheritance.
+   1. Inheritance : OOP allows us to create a class(child class) based on another class(parent class).The child class copies the attributes (both data and procedural) from the parent         class. This concept is called inheritance.
    2. Polymorphism : The function with same name behaves differently for different type of objects.
 
 Q18. Describe three applications for exception processing.
 
-A: > To handle divide by zero
-   > To handle index out of range error
-   > To handle wrong key name for dictionaries
+A: 1. To handle divide by zero
+   2. To handle index out of range error
+   3. To handle wrong key name for dictionaries
 
 Q19. What happens if you don't do something extra to treat an exception?
 
@@ -102,7 +102,7 @@ A: If we don't do anything to treat an exception, we will get an error and the e
 
 Q20. What are your options for recovering from an exception in your script?
 
-A: 1. We can place the code which may cause exception in try block. After a try block, include an except: statement, followed by a block of code which handles the           problem.A single try statement can have multiple except statements.We can provide generic except statement which can handle any type of exception.
+A: 1. We can place the code which may cause exception in try block. After a try block, include an except: statement, followed by a block of code which handles the           problem.A         single try statement can have multiple except statements.We can provide generic except statement which can handle any type of exception.
    2. After the except clause(s), we can include an else-clause. The code in the else-block executes if the code in the try: block does not raise an exception.
    3. WE can use a finally: block along with a try: block. The finally block is a place to put any code that must execute, whether the try-block raised an exception or       not.
 
@@ -135,17 +135,17 @@ A: assert statement let us test if a condition in our code returns True, if not,
 
 Q27. What is the purpose of the with/as argument, and what other statement is it like?
 
-A: with statement is used in exception handling to make the code cleaner and much more readable. It simplifies the management of common resources like file streams.It is like try-except statement.
+A: with statement is used in exception handling to make the code cleaner and much more readable. It simplifies the management of common resources like file streams.It is like try-except    statement.
 
 Q28. What are *args, **kwargs?
 
 A: *args and **kwargs are special keyword which allows function to take variable length argument.
-*args passes variable number of non-keyworded arguments and on which operation of the tuple can be performed.
-**kwargs passes variable number of keyword arguments dictionary to function on which operation of a dictionary can be performed.
+   *args passes variable number of non-keyworded arguments and on which operation of the tuple can be performed.
+   **kwargs passes variable number of keyword arguments dictionary to function on which operation of a dictionary can be performed.
 
 Q29. How can I pass optional or keyword parameters from one function to another?
 
-A: Collect the arguments using the * and ** specifiers in the functions parameter list, this gives us the positional arguments as a tuple and the keyword arguments as a dictionary. Then we can pass these arguments when calling another function by using * and **.
+A: Collect the arguments using the * and ** specifiers in the functions parameter list, this gives us the positional arguments as a tuple and the keyword arguments as a dictionary. Then    we can pass these arguments when calling another function by using * and **.
 
 Q30. What are Lambda Functions?
 
@@ -153,7 +153,7 @@ A: A lambda function is an anonymous function, that can take any number of argum
 
 Q31. Explain Inheritance in Python with an example?
 
-A: Inheritance is a mechanism through which we create a class or object based on another class or object. In other words, the new objects will have all the features or    attributes of the class or object on which they are based. We refer to the created class as the derived or child class, and the class from which it inherits is the    base or parent class.
+A: Inheritance is a mechanism through which we create a class or object based on another class or object. In other words, the new objects will have all the features or    attributes of    the class or object on which they are based. We refer to the created class as the derived or child class, and the class from which it inherits is the    base or parent class.
 
    Ex:
    
@@ -195,11 +195,11 @@ A: class A
 Q33. Which methods/functions do we use to determine the type of instance and inheritance?
 
 A: The isinstance() method checks whether an object is an instance of a class.
-issubclass() method checks whether one class is a subclass of another class (or other classes).
+   issubclass() method checks whether one class is a subclass of another class (or other classes).
 
 Q34.Explain the use of the 'nonlocal' keyword in Python.
 
-A: The nonlocal keyword is used in nested functions to reference a variable in the parent function. The nonlocal keyword won’t work on local or global variables and therefore must be used to reference variables in another scope except the global and local one.
+A: The nonlocal keyword is used in nested functions to reference a variable in the parent function. The nonlocal keyword won’t work on local or global variables and therefore must be      used to reference variables in another scope except the global and local one.
 
 Q35. What is the global keyword?
 
