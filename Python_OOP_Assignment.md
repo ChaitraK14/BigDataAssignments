@@ -10,7 +10,6 @@ A: An inheritance search looks for an attribute first in the instance object, th
 Q3. How do you distinguish between a class object and an instance object?
 
 A: 1.Class objects represent the class itself, while instance objects represent individual instances of the class.
-
    2.Class objects can have class-level attributes and methods that are shared among all instances of the class, while instance objects have their own set of attributes and methods that    are independent of other.
 
 Q4. What makes the first argument in a class’s method function special?
