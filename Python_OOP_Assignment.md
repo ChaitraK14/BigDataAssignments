@@ -1,18 +1,17 @@
 ## Python OOP Assignment
 Q1. What is the purpose of Python's OOP?
 
-
-
-A:  An object-oriented paradigm is to design the program using classes and objects. The object is related to real-word entities such as book, house, pencil, etc. The oops concept focuses on writing the reusable code. It is a widespread technique to solve the problem by creating objects.
+A: An object-oriented paradigm is to design the program using classes and objects. The object is related to real-word entities such as book, house, pencil, etc. The oops concept focuses    on writing the reusable code. It is a widespread technique to solve the problem by creating objects.
 
 Q2. Where does an inheritance search look for an attribute?
 
-A:An inheritance search looks for an attribute first in the instance object, then in the class the instance was created from, then in all higher superclasses, progressing from left to right (by default). 
+A: An inheritance search looks for an attribute first in the instance object, then in the class the instance was created from, then in all higher superclasses, progressing from left to    right (by default). 
 
 Q3. How do you distinguish between a class object and an instance object?
 
-A: > Class objects represent the class itself, while instance objects represent individual instances of the class.
-   > Class objects can have class-level attributes and methods that are shared among all instances of the class, while instance objects have their own set of attributes and methods that are independent of other.
+A: 1.Class objects represent the class itself, while instance objects represent individual instances of the class.
+
+   2.Class objects can have class-level attributes and methods that are shared among all instances of the class, while instance objects have their own set of attributes and methods that    are independent of other.
 
 Q4. What makes the first argument in a class’s method function special?
 
