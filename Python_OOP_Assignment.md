@@ -9,7 +9,8 @@ A:An inheritance search looks for an attribute first in the instance object, the
 
 Q3. How do you distinguish between a class object and an instance object?
 
-A: 
+A: > Class objects represent the class itself, while instance objects represent individual instances of the class.
+   > Class objects can have class-level attributes and methods that are shared among all instances of the class, while instance objects have their own set of attributes and methods that are independent of other.
 
 Q4. What makes the first argument in a class’s method function special?
 
@@ -37,7 +38,18 @@ A: The difference between a class and a module in python is that a class is used
 
 Q10. How do you make instances and classes?
 
-A: 
+A: Classes can be created using class keyword.
+
+   Ex: class student:
+            def __init__(self,name,age):
+                  self.name=name
+                  self.age=age
+            
+    Instances can be created using class and passing the attributes in paranthesis.
+    
+    Ex: s1 = student("xyz",29)
+    
+    student is a class and s1 is an object/ instance of the class student.
 
 Q11. Where and how should be class attributes created?
 
@@ -79,7 +91,9 @@ A: The most important concepts are:
 
 Q18. Describe three applications for exception processing.
 
-A: 
+A: > To handle divide by zero
+   > To handle index out of range error
+   > To handle wrong key name for dictionaries
 
 Q19. What happens if you don't do something extra to treat an exception?
 
@@ -87,9 +101,9 @@ A: If we don't do anything to treat an exception, we will get an error and the e
 
 Q20. What are your options for recovering from an exception in your script?
 
-A:1. We can place the code which may cause exception in try block. After a try block, include an except: statement, followed by a block of code which handles the problem.A single try statement can have multiple except statements.We can provide generic except statement which can handle any type of exception.
-2.After the except clause(s), we can include an else-clause. The code in the else-block executes if the code in the try: block does not raise an exception.
-3.WE can use a finally: block along with a try: block. The finally block is a place to put any code that must execute, whether the try-block raised an exception or not.
+A: 1. We can place the code which may cause exception in try block. After a try block, include an except: statement, followed by a block of code which handles the           problem.A single try statement can have multiple except statements.We can provide generic except statement which can handle any type of exception.
+   2. After the except clause(s), we can include an else-clause. The code in the else-block executes if the code in the try: block does not raise an exception.
+   3. WE can use a finally: block along with a try: block. The finally block is a place to put any code that must execute, whether the try-block raised an exception or       not.
 
 Q21. Describe two methods for triggering exceptions in your script.
 
@@ -138,7 +152,39 @@ A: A lambda function is an anonymous function, that can take any number of argum
 
 Q31. Explain Inheritance in Python with an example?
 
-A:Inheritance is a mechanism through which we create a class or object based on another class or object. In other words, the new objects will have all the features or attributes of the class or object on which they are based. We refer to the created class as the derived or child class, and the class from which it inherits is the base or parent class.
+A: Inheritance is a mechanism through which we create a class or object based on another class or object. In other words, the new objects will have all the features or    attributes of the class or object on which they are based. We refer to the created class as the derived or child class, and the class from which it inherits is the    base or parent class.
+
+   Ex:
+   
+   #**Parent_class**
+   class Vehicle:
+      def __init__(self,Brand,model_name):
+            self.Brand=Brand
+            self.model_name=model_name
+    
+      def show(self):
+            print("Brand:",self.Brand)
+            print("Model:",self.model_name)
+   
+   #**Child_class**
+   class Car(Vehicle):
+      pass
+
+   car_details = Car('Tata Motors','TIAGO')
+   car_details.show()
+   
+   #**Child_class using super() keyword**
+   class Car2(Vehicle):
+      def __init__(self,Brand,model_name,launched_year):
+            super().__init__(Brand,model_name)
+            self.launched_year=launched_year
+
+      def show(self):
+            super().show()
+            print("Lauched_year:",self.launched_year)
+
+    car_details_2=Car2('Tata Motors','TIGOR',2017)
+    car_details_2.show()
 
 Q32. Suppose class C inherits from classes A and B as class C(A,B).Classes A and B both have their own versions of method func(). If we call func() from an object of 
 class C, which version gets invoked?
