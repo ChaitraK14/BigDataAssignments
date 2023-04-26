@@ -41,11 +41,13 @@ Q10. How do you make instances and classes?
 
 A: Classes can be created using class keyword.
 
-   Ex: class student:
+   Ex: 
+   
+        class student:
             def __init__(self,name,age):
                   self.name=name
-                  self.age=age
-            
+                  self.age=age     
+    
     Instances can be created using class and passing the attributes in paranthesis.
     
     Ex: s1 = student("xyz",29)
@@ -56,11 +58,13 @@ Q11. Where and how should be class attributes created?
 
 A: Class attributes are created inside class and outside the constructor(__init__ method).
 
-Ex: class Student:
-      school = "abc"
-      def __init__(self,name,age):
-        self.name=name
-        self.age=age
+Ex: 
+
+         class Student:
+            school = "abc"
+            def __init__(self,name,age):
+               self.name=name
+               self.age=age
 
     here school is a class attribute.
 
@@ -157,35 +161,35 @@ A: Inheritance is a mechanism through which we create a class or object based on
 
    Ex:
    
-   #**Parent_class**
-   class Vehicle:
-      def __init__(self,Brand,model_name):
-            self.Brand=Brand
-            self.model_name=model_name
-    
-      def show(self):
-            print("Brand:",self.Brand)
-            print("Model:",self.model_name)
-   
-   #**Child_class**
-   class Car(Vehicle):
-      pass
+         #**Parent_class**
+         class Vehicle:
+            def __init__(self,Brand,model_name):
+                  self.Brand=Brand
+                  self.model_name=model_name
 
-   car_details = Car('Tata Motors','TIAGO')
-   car_details.show()
-   
-   #**Child_class using super() keyword**
-   class Car2(Vehicle):
-      def __init__(self,Brand,model_name,launched_year):
-            super().__init__(Brand,model_name)
-            self.launched_year=launched_year
+            def show(self):
+                  print("Brand:",self.Brand)
+                  print("Model:",self.model_name)
 
-      def show(self):
-            super().show()
-            print("Lauched_year:",self.launched_year)
+         #**Child_class**
+         class Car(Vehicle):
+            pass
 
-    car_details_2=Car2('Tata Motors','TIGOR',2017)
-    car_details_2.show()
+         car_details = Car('Tata Motors','TIAGO')
+         car_details.show()
+
+         #**Child_class using super() keyword**
+         class Car2(Vehicle):
+            def __init__(self,Brand,model_name,launched_year):
+                  super().__init__(Brand,model_name)
+                  self.launched_year=launched_year
+
+            def show(self):
+                  super().show()
+                  print("Lauched_year:",self.launched_year)
+
+          car_details_2=Car2('Tata Motors','TIGOR',2017)
+          car_details_2.show()
 
 Q32. Suppose class C inherits from classes A and B as class C(A,B).Classes A and B both have their own versions of method func(). If we call func() from an object of 
 class C, which version gets invoked?
