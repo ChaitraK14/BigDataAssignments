@@ -366,7 +366,85 @@ A:
 		HAVING SUM(o.unit) >= 100
 		ORDER BY SUM(o.unit) DESC;
 		
-Q27. 
+Q27. Write an SQL query to find the users who have valid emails.
+A valid e-mail has a prefix name and a domain where:
+● The prefix name is a string that may contain letters (upper or lower case), digits, underscore
+'_', period '.', and/or dash '-'. The prefix name must start with a letter.
+● The domain is '@leetcode.com'.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    *
+		FROM
+		    Users
+		WHERE
+		    mail REGEXP '^[a-zA-Z][a-zA-Z0-9\_.-]*@leetcode.com';
+		
+Q28. Write an SQL query to report the customer_id and customer_name of customers who have spent at
+least $100 in each month of June and July 2020.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    c.customer_id, c.name
+		FROM
+		    Product p
+			INNER JOIN
+		    Orders o ON p.product_id = o.product_id
+			INNER JOIN
+		    Customers c ON o.customer_id = c.customer_id
+		GROUP BY c.customer_id , c.name
+		HAVING (SUM(CASE
+		    WHEN MONTH(o.order_date) = 6 THEN price * quantity
+		    ELSE 0
+		END) >= 100
+		    AND SUM(CASE
+		    WHEN MONTH(o.order_date) = 7 THEN price * quantity
+		    ELSE 0
+		END) >= 100);
+		
+Q29. Write an SQL query to report the distinct titles of the kid-friendly movies streamed in June 2020.
+Return the result table in any order.
+
+A:
+
+		SELECT DISTINCT
+		    c.title
+		FROM
+		    TVProgram t
+			INNER JOIN
+		    Content c ON t.content_id = c.content_id
+		WHERE
+		    t.program_date LIKE '2020-06-%'
+			AND c.Kids_content = 'Y'
+			AND c.content_type = 'Movies';
+			
+Q30. Write an SQL query to find the npv of each query of the Queries table.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    q.id, q.year, IFNULL(n.npv, 0) AS npv
+		FROM
+		    Queries q
+			LEFT JOIN
+		    NPV n ON n.id = q.id AND n.year = q.year
+		ORDER BY q.id , q.year;
+		
+Q31. Write an SQL query to find the npv of each query of the Queries table.
+Return the result table in any order.
+
+A:
+
+		Same
+		
+Q32. 
+
+
 		    
 		    
 		    
