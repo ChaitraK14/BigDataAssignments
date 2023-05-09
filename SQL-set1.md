@@ -628,7 +628,96 @@ number by the total number of players.
 
 A:
 
+		WITH login AS
+		(SELECT 
+		    player_id, MIN(event_date) AS first_login
+		FROM
+		    Activity
+		GROUP BY player_id)
+
+		SELECT 
+		    ROUND(COUNT(DISTINCT a.player_id) / (SELECT 
+				    COUNT(DISTINCT player_id)
+				FROM
+				    Activity),
+			    2)
+		FROM
+		    Activity a
+			INNER JOIN
+		    login l ON a.player_id = l.player_id
+			AND DATEDIFF(event_date, first_login) = 1;
+			
+Q44. Write an SQL query to report the managers with at least five direct reports.
+Return the result table in any order.
+
 A:
+
+		SELECT 
+		    e.name
+		FROM
+		    Employee e
+			INNER JOIN
+		    Employee m ON e.id = m.managerId
+		GROUP BY e.id , e.name
+		HAVING COUNT(DISTINCT m.id) >= 5;
+		
+Q45. Write an SQL query to report the respective department name and number of students majoring in
+each department for all departments in the Department table (even ones with no current students).
+Return the result table ordered by student_number in descending order. In case of a tie, order them by
+dept_name alphabetically.
+
+A:
+
+		SELECT 
+		    dept_name, COUNT(student_id) AS student_number
+		FROM
+		    Student s
+			RIGHT JOIN
+		    Department d ON s.dept_id = d.dept_id
+		GROUP BY dept_name;
+		
+Q46. Write an SQL query to report the customer ids from the Customer table that bought all the products in
+the Product table.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    customer_id
+		FROM
+		    Customer
+		GROUP BY customer_id
+		HAVING COUNT(DISTINCT product_key) = (SELECT 
+			COUNT(DISTINCT product_key)
+		    FROM
+			Product5);
+			
+Q47. Write an SQL query that reports the most experienced employees in each project. In case of a tie,
+report all employees with the maximum number of experience years.
+Return the result table in any order.
+
+A:
+
+		SELECT project_id,
+			employee_id 
+		FROM
+			(SELECT p.project_id,
+				p.employee_id,
+				RANK() OVER(PARTITION BY project_id ORDER BY experience_years desc) AS r 
+			FROM Project p INNER JOIN Employee e
+			ON p.employee_id=e.employee_id)temp
+		WHERE r=1;
+		
+Q48. Write an SQL query that reports the books that have sold less than 10 copies in the last year,
+excluding books that have been available for less than one month from today. Assume today is
+2019-06-23.
+Return the result table in any order.
+
+A:
+
+
+
+
 
 
 
