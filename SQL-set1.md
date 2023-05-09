@@ -454,6 +454,69 @@ A:
 		    Employees e
 			LEFT JOIN
 		    EmployeeUNI u ON e.id = u.id;
+		    
+Q33. Write an SQL query to report the distance travelled by each user.
+Return the result table ordered by travelled_distance in descending order, if two or more users
+travelled the same distance, order them by their name in ascending order.
+
+A:
+
+		SELECT 
+		    u.name, IFNULL(SUM(distance), 0) AS travelled_distance
+		FROM
+		    Users u
+			LEFT JOIN
+		    Rides r ON u.id = r.user_id
+		GROUP BY u.id , u.name
+		ORDER BY travelled_distance DESC, u.name ASC;
+		
+Q34. Write an SQL query to get the names of products that have at least 100 units ordered in February 2020
+and their amount.
+Return result table in any order.
+
+A:
+
+		SELECT 
+		    p.product_name, SUM(unit) AS unit
+		FROM
+		    Products p
+			INNER JOIN
+		    Orders o ON p.product_id = o.product_id
+		WHERE
+		    order_date LIKE '2020-02%'
+		GROUP BY p.product_id , p.product_name
+		HAVING unit >= 100;
+		
+Q35. Write an SQL query to:
+● Find the name of the user who has rated the greatest number of movies. In case of a tie,
+return the lexicographically smaller user name.
+● Find the movie name with the highest average rating in February 2020. In case of a tie, return
+the lexicographically smaller movie name.
+
+A:
+
+		SELECT 
+		    u.name
+		FROM
+		    Users3 u
+			INNER JOIN
+		    MovieRating r ON u.user_id = r.user_id
+		GROUP BY u.user_id , u.name
+		ORDER BY COUNT(*) DESC , u.name ASC
+		LIMIT 1;
+		
+		SELECT 
+		    m.title
+		FROM
+		    Movies m
+			INNER JOIN
+		    MovieRating r ON m.movie_id = r.movie_id
+		WHERE r.created_at LIKE '2020-02%'
+		GROUP BY m.movie_id , m.title
+		ORDER BY avg(rating) DESC , m.title ASC
+		LIMIT 1;
+		
+Q36. 
 
 
 		    
