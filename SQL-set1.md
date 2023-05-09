@@ -516,22 +516,118 @@ A:
 		ORDER BY avg(rating) DESC , m.title ASC
 		LIMIT 1;
 		
-Q36. 
+Q36. Write an SQL query to report the distance travelled by each user.
+Return the result table ordered by travelled_distance in descending order, if two or more users
+travelled the same distance, order them by their name in ascending order.
 
+A:
 
-		    
-		    
-		    
+		SELECT 
+		    u.name, IFNULL(SUM(distance), 0) AS travelled_distance
+		FROM
+		    Users u
+			LEFT JOIN
+		    Rides r ON u.id = r.user_id
+		GROUP BY u.id , u.name
+		ORDER BY travelled_distance DESC, u.name ASC;
 		
-                    
-                    
+Q37. Write an SQL query to show the unique ID of each user, If a user does not have a unique ID replace just
+show null.
+Return the result table in any order.
 
+A:
 
+		SELECT 
+		    unique_id, name
+		FROM
+		    Employees e
+			LEFT JOIN
+		    EmployeeUNI u ON e.id = u.id;
+		    
+Q38. Write an SQL query to find the id and the name of all students who are enrolled in departments that no
+longer exist.
+Return the result table in any order.
 
+A:  
 
+		SELECT 
+		    *
+		FROM
+		    Students
+		WHERE
+		    department_id NOT IN (SELECT 
+			    id
+			FROM
+			    Departments);
+			    
+Q39. Write an SQL query to report the number of calls and the total call duration between each pair of
+distinct persons (person1, person2) where person1 < person2.
+Return the result table in any order.
 
-        
- 
+A:
+
+		SELECT 
+		    LEAST(from_id, to_id) AS person1,
+		    GREATEST(from_id, to_id) AS person2,
+		    COUNT(*) AS call_count,
+		    SUM(duration) AS total_duration
+		FROM
+		    Calls
+		GROUP BY person1 , person2;
+		
+Q40. Write an SQL query to find the average selling price for each product. average_price should be
+rounded to 2 decimal places.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    p.product_id,
+		    ROUND(SUM(price * units) / SUM(units), 2) AS average_price
+		FROM
+		    prices p
+			INNER JOIN
+		    UnitsSold u ON p.product_id = u.product_id
+			AND u.purchase_date BETWEEN p.start_date AND p.end_date
+		GROUP BY p.product_id;
+		
+Q41. Write an SQL query to report the number of cubic feet of volume the inventory occupies in each
+warehouse.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    w.name, SUM(units * Width * Length * Height) AS volume
+		FROM
+		    Warehouse w
+			INNER JOIN
+		    Products p ON w.product_id = p.product_id
+		GROUP BY w.name;
+		
+Q42. Write an SQL query to report the difference between the number of apples and oranges sold each day.
+Return the result table ordered by sale_date.
+
+A:
+
+		SELECT 
+		    sale_date,
+		    SUM(CASE
+			WHEN fruit = 'apples' THEN sold_num
+		    END) - SUM(CASE
+			WHEN fruit = 'oranges' THEN sold_num
+		    END) AS Diff
+		FROM
+		    Sales
+		GROUP BY sale_date;
+		
+Q43. Write an SQL query to report the fraction of players that logged in again on the day after the day they
+first logged in, rounded to 2 decimal places. In other words, you need to count the number of players
+that logged in for at least two consecutive days starting from their first login date, then divide that
+number by the total number of players.
+
+A:
+
 
 
        
