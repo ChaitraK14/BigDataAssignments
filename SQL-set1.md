@@ -728,7 +728,37 @@ A:
 		     FROM Enrollments) temp
 		WHERE rn=1;
 		
-Q50. 
+Q50. The winner in each group is the player who scored the maximum total points within the group. In the
+case of a tie, the lowest player_id wins.
+Write an SQL query to find the winner
+
+A:
+
+		WITH winner_by_match AS
+		(SELECT group_id,
+			CASE 
+				WHEN first_score>second_score THEN first_score
+				WHEN first_score<second_score THEN second_score
+				ELSE least(first_score,second_score) 
+			END AS highest_score,
+			CASE 
+				WHEN first_score>second_score THEN first_player
+				WHEN first_score<second_score THEN second_player
+				ELSE least(first_player,second_player) 
+			END AS winner
+		FROM Players p INNER JOIN Matches m
+		ON p.player_id=m.first_player)
+
+		SELECT group_id,winner as player_id 
+		FROM
+			(SELECT *,RANK()OVER(PARTITION BY group_id ORDER BY highest_score DESC) AS r 
+			FROM winner_by_match) tmp 
+		WHERE r=1;
+		
+
+
+
+
 
 
 
