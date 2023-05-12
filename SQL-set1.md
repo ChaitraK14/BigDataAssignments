@@ -715,6 +715,21 @@ Return the result table in any order.
 
 A:
 
+Q49. Write a SQL query to find the highest grade with its corresponding course for each student. In case of
+a tie, you should find the course with the smallest course_id.
+Return the result table ordered by student_id in ascending order.
+
+A:
+
+		SELECT student_id,
+			   course_id,grade 
+		FROM
+			(SELECT *,RANK() OVER(PARTITION BY student_id ORDER BY grade DESC,course_id) AS rn 
+		     FROM Enrollments) temp
+		WHERE rn=1;
+		
+Q50. 
+
 
 
 
