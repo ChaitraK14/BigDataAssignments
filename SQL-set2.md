@@ -165,6 +165,66 @@ The query result format is in the following example.
 
 A:
 
+        SELECT 
+            MIN(ABS(p1.x - p2.x)) AS shortest
+        FROM
+            point p1,
+            point p2
+        WHERE
+            p1.x <> p2.x;
+            
+ Follow up: How could you optimise your query if the Point table is ordered in ascending order?
+ 
+        SELECT min(distance) AS shortest 
+        FROM   
+	        (SELECT abs(x-LEAD(x) OVER(ORDER BY x)) AS distance 
+	        FROM point)tmp;
+            
+Q62. Write a SQL query for a report that provides the pairs (actor_id, director_id) where the actor has
+cooperated with the director at least three times.
+Return the result table in any order.
+
+A:
+
+        SELECT 
+            actor_id, director_id
+        FROM
+            ActorDirector
+        GROUP BY actor_id , director_id
+        HAVING COUNT(*)>=3;
+        
+Q63. Write an SQL query that reports the product_name, year, and price for each sale_id in the Sales table.
+Return the resulting table in any order.
+
+A:
+
+        SELECT 
+            product_name, year, price
+        FROM
+            Sales s
+                INNER JOIN
+            Product p ON s.product_id = p.product_id;
+            
+Q64. Write an SQL query that reports the average experience years of all the employees for each project,
+rounded to 2 digits.
+Return the result table in any order.
+
+A:
+
+        SELECT 
+            project_id, ROUND(AVG(experience_years), 2) AS average_years
+        FROM
+            Project p
+                INNER JOIN
+            Employee e ON p.employee_id = e.employee_id
+        GROUP BY project_id;
+        
+Q65. Write an SQL query that reports the best seller by total sales price, If there is a tie, report them all.
+Return the result table in any order.
+
+A:
+
+
 
 
 
