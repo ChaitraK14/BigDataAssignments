@@ -224,6 +224,81 @@ Return the result table in any order.
 
 A:
 
+	SELECT 
+	    seller_id
+	FROM
+	    sales4
+	GROUP BY seller_id
+	HAVING SUM(price) = (SELECT 
+		SUM(price)
+	    FROM
+		sales4
+	    GROUP BY seller_id
+	    ORDER BY SUM(price) DESC
+	    LIMIT 1);
+	    
+Q66. Write an SQL query that reports the buyers who have bought S8 but not iPhone. Note that S8 and
+iPhone are products present in the Product table.
+Return the result table in any order.
+
+A:
+
+	SELECT 
+	    buyer_id
+	FROM
+	    Sales
+	WHERE
+	    buyer_id IN (SELECT 
+		    buyer_id
+		FROM
+		    P ,roduct p
+			INNER JOIN
+		    sales6 s ON p.product_id = s.product_id
+		WHERE
+		    product_name = 'S8')
+		AND buyer_id NOT IN (SELECT 
+		    buyer_id
+		FROM
+		    product7 p
+			INNER JOIN
+		    sales6 s ON p.product_id = s.product_id
+		WHERE
+		    product_name = 'iPhone');
+		    
+Q67. Write an SQL query to compute the moving average of how much the customer paid in a seven days
+window (i.e., current day + 6 days before). average_amount should be rounded to two decimal places.
+Return result table ordered by visited_on in ascending order.
+
+A:
+
+		SELECT 
+			visited_on, amount_sum AS amount, average_amount
+		FROM
+			(SELECT 
+				visited_on,
+				COUNT(SUM(amount)) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS days_count,
+				SUM(SUM(amount)) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS amount_sum,
+				avg(sum(amount)) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS average_amount
+			FROM Customer2 
+			GROUP BY visited_on) temp
+		WHERE days_count=7;
+		
+Q68. Write an SQL query to find the total score for each gender on each day.
+Return the result table ordered by gender and day in ascending order.
+
+A:
+
+		SELECT 
+			gender,day,SUM(score_points) OVER(PARTITION BY gender ORDER BY gender,day) AS total 
+		FROM scores;
+		
+Q69. Write an SQL query to find the start and end number of continuous ranges in the table Logs.
+Return the result table ordered by start_id.
+
+A:
+
+
+
 
 
 
