@@ -297,6 +297,108 @@ Return the result table ordered by start_id.
 
 A:
 
+		SELECT 
+			MIN(d.log_id) AS start_id, MAX(d.log_id) AS end_id 
+		FROM
+			(SELECT r.log_id,(r.log_id-rn) AS diff 
+			FROM
+				(SELECT log_id,ROW_NUMBER() OVER() AS rn 
+			FROM logs) r)d
+		GROUP BY diff;
+		
+Q70. Write an SQL query to find the number of times each student attended each exam.
+Return the result table ordered by student_id and subject_name.
+
+A:
+
+		SELECT 
+		    s.student_id,
+		    s.student_name,
+		    s.subject_name,
+		    IFNULL(attended_exams, 0)
+		FROM
+		    (SELECT 
+			*
+		    FROM
+			Students2
+		    CROSS JOIN Subjects) s
+			LEFT JOIN
+		    (SELECT 
+			*, COUNT(*) AS attended_exams
+		    FROM
+			Examinations
+		    GROUP BY student_id , subject_name) e ON s.student_id = e.student_id
+			AND s.subject_name = e.subject_name
+		ORDER BY s.student_id , s.subject_name;
+		
+Q71. Write an SQL query to find employee_id of all employees that directly or indirectly report their work to
+the head of the company.
+The indirect relation between managers will not exceed three managers as the company is small.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    employee_id
+		FROM
+		    Employees2
+		WHERE
+		    manager_id IN (SELECT 
+			    employee_id
+			FROM
+			    Employees2
+			WHERE
+			    manager_id IN (SELECT 
+				    employee_id
+				FROM
+				    Employees2
+				WHERE
+				    manager_id = 1))
+			AND employee_id <> 1;
+			
+Q72. Write an SQL query to find for each month and country, the number of transactions and their total
+amount, the number of approved transactions and their total amount.
+Return the result table in any order.
+
+A:
+
+		SELECT 
+		    date_format(trans_date,"%Y-%m") AS month,
+		    country,
+		    COUNT(*) AS trans_count,
+		    COUNT(state = 'approved') AS approved_count,
+		    SUM(amount) AS trans_total_amount,
+		    SUM(CASE
+			WHEN state = 'approved' THEN amount
+		    END) AS approved_total_amount
+		FROM
+		    Transactions
+		GROUP BY month, country;
+		
+Q73. Write an SQL query to find the average daily percentage of posts that got removed after being
+reported as spam, rounded to 2 decimal places.
+
+A:
+
+		SELECT 
+		    ROUND(AVG(daily_percent), 2) AS average_daily_percent
+		FROM
+		    (SELECT 
+			COUNT(DISTINCT r.post_id) / COUNT(DISTINCT a.post_id) * 100 AS daily_percent
+		    FROM
+			Actions a
+		    LEFT JOIN Removals r ON a.post_id = r.post_id
+		    WHERE
+			extra = 'spam'
+		    GROUP BY action_date) temp;
+		    
+Q74. Write an SQL query to report the fraction of players that logged in again on the day after the day they
+first logged in, rounded to 2 decimal places. In other words, you need to count the number of players
+that logged in for at least two consecutive days starting from their first login date, then divide that
+number by the total number of players.
+
+A:
+
 
 
 
