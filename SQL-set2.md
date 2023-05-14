@@ -399,6 +399,51 @@ number by the total number of players.
 
 A:
 
+		WITH login AS
+		(SELECT 
+		    player_id, MIN(event_date) AS first_login
+		FROM
+		    Activity
+		GROUP BY player_id)
+
+		SELECT 
+		    ROUND(COUNT(DISTINCT a.player_id) / (SELECT 
+				    COUNT(DISTINCT player_id)
+				FROM
+				    Activity),
+			    2)
+		FROM
+		    Activity a
+			INNER JOIN
+		    login l ON a.player_id = l.player_id
+			AND DATEDIFF(event_date, first_login) = 1;
+			
+Q75. Same as Q74
+
+Q76. Write an SQL query to find the salaries of the employees after applying taxes. Round the salary to the
+nearest integer.
+The tax rate is calculated for each company based on the following criteria:
+● 0% If the max salary of any employee in the company is less than $1000.
+● 24% If the max salary of any employee in the company is in the range [1000, 10000] inclusive.
+● 49% If the max salary of any employee in the company is greater than $10000.
+Return the result table in any order.
+
+A:
+
+		SELECT 	
+			company_id,employee_id,employee_name,
+			CASE
+				WHEN MAX(salary) OVER(PARTITION BY company_id)<1000 THEN ROUND(salary,0)
+			WHEN MAX(salary) OVER(PARTITION BY company_id)>10000 THEN ROUND(salary-(0.49*salary),0)
+			ELSE ROUND(salary-(0.24*salary),0)
+			END AS salary
+		FROM Salaries;
+		
+Q77. Write an SQL query to evaluate the boolean expressions in Expressions table.
+Return the result table in any order.
+
+A:
+
 
 
 
