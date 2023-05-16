@@ -503,7 +503,222 @@ A:
 			    Employee
 			ORDER BY name;
 			
-Q80. 
+Q80. Write a query to obtain the year-on-year growth rate for the total spend of each product for
+each year.
+Output the year (in ascending order) partitioned by product id, current year's spend, previous year's
+spend and year-on-year growth rate (percentage rounded to 2 decimal places).
+
+A:
+
+		SELECT 
+			*,
+		    round(((curr_year_spend-prev_year_spend)/prev_year_spend)*100,2) AS yoy_rate 
+		FROM
+			(SELECT 
+				YEAR(transaction_date) AS year,
+			product_id,spend as curr_year_spend,
+				LAG(spend) OVER(PARTITION BY product_id ORDER BY product_id, YEAR(transaction_date)) AS prev_year_spend
+			FROM user_transactions2) temp;
+			
+Q81. Write a SQL query to find the number of prime and non-prime items that can be stored in the 500,000
+square feet warehouse. Output the item type and number of items to be stocked.
+
+A:
+
+		WITH summary AS
+		(SELECT 
+			item_type,
+		    SUM(square_footage) AS total_sqft,
+		    COUNT(*) AS item_count 
+		FROM inventory GROUP BY item_type),
+		prime_occupied_area AS
+		(SELECT 
+			item_type,
+			total_sqft,
+			FLOOR(500000/total_sqft) AS prime_item_comb_area,
+		    FLOOR(500000/total_sqft)*item_count AS prime_item_count 
+		FROM summary
+		WHERE item_type='prime_eligible')
+
+		SELECT 
+			item_type,
+			CASE
+				WHEN item_type='prime_eligible'
+					THEN floor(500000/total_sqft)*item_count
+			WHEN item_type='not_prime'
+					THEN floor((500000-
+						(SELECT floor(500000/total_sqft)*total_sqft 
+				FROM prime_occupied_area))/total_sqft)*item_count
+			END AS item_count
+		FROM summary;
+
+Q82. Write a query to obtain the active user retention in July 2022. Output the month (in numerical format 1, 2, 3) and the
+number of monthly active users (MAUs).
+
+A:
+
+Q83. Write a query to report the median of searches made by a user. Round the median to one decimal
+point.
+
+A:
+
+Q84. Write a query to update the Facebook advertiser's status using the daily_pay table. Advertiser is a
+two-column table containing the user id and their payment status based on the last payment and
+daily_pay table has current information about their payment. Only advertisers who paid will show up in
+this table.
+Output the user id and current payment status sorted by the user id.
+
+A:
+
+		WITH payment_status AS(
+		SELECT 
+		    a.user_id,
+		    a.status,
+		    d.paid
+		FROM advertiser a LEFT JOIN daily_pay d
+		ON a.user_id=d.user_id
+		UNION
+		SELECT
+		    d.user_id,
+		    a.status,
+		    d.paid
+		FROM advertiser a RIGHT JOIN daily_pay d
+		ON a.user_id=d.user_id)
+
+		SELECT 
+			user_id,
+			CASE
+			WHEN status IS NULL AND paid IS NOT NULL THEN 'NEW'
+			WHEN paid IS NULL THEN 'CHURN'
+			WHEN status='CHURN' AND paid IS NOT NULL THEN 'RESURRENT'
+			WHEN status!='CHURN' and paid IS NOT NULL THEN 'EXISTING'
+			END AS new_status
+		FROM payment_status
+		ORDER BY user_id;
+		
+Q85. Write a query that calculates the total time that the fleet of servers was running. The output should be
+in units of full days.
+
+A:
+
+		WITH up_time AS(
+		SELECT
+			server_id,
+		    status_time AS start_time,
+		    LEAD(status_time) OVER(PARTITION BY server_id ORDER BY status_time) AS stop_time
+		FROM server_utilization)
+
+		SELECT sum(TIMESTAMPDIFF(DAY,start_time,stop_time)) AS total_uptime_days FROM up_time;
+		
+Q86. Sometimes, payment transactions are repeated by accident; it could be due to user error, API failure or
+a retry error that causes a credit card to be charged twice.
+Using the transactions table, identify any payments made at the same merchant with the same credit
+card for the same amount within 10 minutes of each other. Count such repeated payments.
+
+A:
+
+		SELECT
+			COUNT(merchant_id) AS payment_count 
+		FROM
+		(SELECT 
+			*,
+			LEAD(transaction_timestamp) 
+				OVER(PARTITION BY merchant_id,credit_card_id,amount 
+			ORDER BY transaction_timestamp) AS lead_time
+		FROM transactions3) temp
+		WHERE TIMESTAMPDIFF(MINUTE,transaction_timestamp,lead_time)<10;
+		
+Q87. Write a query to find the bad experience rate in the first 14 days for new users who signed up in June
+2022. Output the percentage of bad experience rounded to 2 decimal places.
+
+A:
+
+		WITH total_orders AS
+		(SELECT 
+		    c.customer_id,
+		    o.order_id,
+		    t.trip_id,
+		    o.status,
+		    c.signup_timestamp,
+		    t.estimated_delivery_timestamp,
+		    t.actual_delivery_timestamp
+		FROM
+		    Orders8 o
+			INNER JOIN
+		    customers2 c ON o.customer_id = c.customer_id
+			AND TIMESTAMPDIFF(DAY,
+			c.signup_timestamp,
+			o.order_timestamp) <= 14
+			AND MONTH(signup_timestamp) = 6
+			INNER JOIN
+		    trips t ON o.trip_id = t.trip_id)
+
+		SELECT 
+		    ROUND(100 * COUNT(order_id) / (SELECT 
+				    COUNT(order_id)
+				FROM
+				    total_orders),
+			    2) AS bad_experience_pct
+		FROM
+		    total_orders
+		WHERE
+		    status <> 'completed successfully'
+			OR actual_delivery_timestamp IS NULL
+			OR actual_delivery_timestamp > estimated_delivery_timestamp;
+			
+Q88. Write an SQL query to find the total score for each gender on each day.
+Return the result table ordered by gender and day in ascending order.
+
+A:
+
+		SELECT 
+			gender,
+		    day,
+		    sum(score_points) over(partition by gender order by gender,day) as total 
+		FROM Scores;
+		
+Q89. Write an SQL query to find the countries where this company can invest.
+Return the result table in any order.
+
+A:
+
+		    SELECT 
+			c.name
+		    FROM
+			(SELECT 
+			    caller_id AS id, duration
+			FROM
+			    calls UNION ALL SELECT 
+			    callee_id AS id, duration
+			FROM
+			    calls) u
+			    INNER JOIN
+			person p ON u.id = p.id
+			    INNER JOIN
+			country c ON CAST(SUBSTRING(p.phone_number, 1, 3) AS UNSIGNED) = CAST(c.country_code AS UNSIGNED)
+		    GROUP BY c.name
+		    HAVING AVG(duration) > (SELECT 
+			    AVG(duration)
+			FROM
+			    calls);
+
+
+
+		    SELECT employee_id, 
+			   SUM(employee_id) OVER(PARTITION BY team_id) AS team_size 
+		    FROM Employee
+		    ORDER BY employee_id;
+		    
+Q90. Write an SQL query to report the median of all the numbers in the database after decompressing the
+Numbers table. Round the median to one decimal point.
+
+A:
+
+
+
+
+
+
 
 
 
