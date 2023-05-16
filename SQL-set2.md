@@ -465,7 +465,45 @@ Return the result table in any order.
 
 A:
 
+		    SELECT 
+			c.name
+		    FROM
+			(SELECT 
+			    caller_id AS id, duration
+			FROM
+			    calls UNION ALL SELECT 
+			    callee_id AS id, duration
+			FROM
+			    calls) u
+			    INNER JOIN
+			person p ON u.id = p.id
+			    INNER JOIN
+			country c ON CAST(SUBSTRING(p.phone_number, 1, 3) AS UNSIGNED) = CAST(c.country_code AS UNSIGNED)
+		    GROUP BY c.name
+		    HAVING AVG(duration) > (SELECT 
+			    AVG(duration)
+			FROM
+			    calls);
 
+
+
+		    SELECT employee_id, 
+			   SUM(employee_id) OVER(PARTITION BY team_id) AS team_size 
+		    FROM Employee
+		    ORDER BY employee_id;
+		    
+Q79. Write a query that prints a list of employee names (i.e.: the name attribute) from the Employee table in
+alphabetical order.
+
+A:
+
+			SELECT 
+			    name
+			FROM
+			    Employee
+			ORDER BY name;
+			
+Q80. 
 
 
 
