@@ -714,6 +714,40 @@ Numbers table. Round the median to one decimal point.
 
 A:
 
+Q91. Write an SQL query to report the comparison result (higher/lower/same) of the average salary of
+employees in a department to the company's average salary.
+Return the result table in any order.
+
+A:
+
+		WITH cte1 AS
+		(SELECT 
+			DATE_FORMAT(pay_date, '%Y- %m') AS pay_month, 
+		    AVG(amount) AS avg_salary 
+		FROM Salary s INNER JOIN Employee7 e 
+		ON s.employee_id=e.employee_id
+		GROUP BY pay_month),
+		cte2 AS
+		(SELECT 
+			DATE_FORMAT(pay_date, '%Y- %m') AS pay_month,
+			department_id,AVG(amount) AS avg_dept_salary
+		FROM Salary s INNER JOIN Employee7 e 
+		ON s.employee_id=e.employee_id
+		GROUP BY pay_month,department_id)
+
+		SELECT 
+			cte1.pay_month,department_id,
+			CASE 
+				WHEN avg_dept_salary>avg_salary THEN 'higher'
+				WHEN avg_dept_salary<avg_salary THEN 'lower'
+				ELSE 'same'
+			END AS comparison
+		FROM cte1 INNER JOIN cte2
+		ON cte1.pay_month=cte2.pay_month
+		ORDER BY 2,1;
+		
+Q92. 
+
 
 
 
