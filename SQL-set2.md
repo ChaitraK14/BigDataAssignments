@@ -778,6 +778,99 @@ Return the result table in any order.
 
 A:
 
+	WITH winner_by_match AS
+	(SELECT group_id,
+		CASE 
+			WHEN first_score>second_score THEN first_score
+			WHEN first_score<second_score THEN second_score
+			ELSE least(first_score,second_score) 
+		END AS highest_score,
+		CASE 
+			WHEN first_score>second_score THEN first_player
+			WHEN first_score<second_score THEN second_player
+			ELSE least(first_player,second_player) 
+		END AS winner
+	FROM Players p INNER JOIN Matches m
+	ON p.player_id=m.first_player)
+
+	SELECT group_id,winner as player_id 
+	FROM
+		(SELECT *,RANK()OVER(PARTITION BY group_id ORDER BY highest_score DESC) AS r 
+		FROM winner_by_match) tmp 
+	WHERE r=1;
+
+Q94. Write an SQL query to report the students (student_id, student_name) being quiet in all exams. Do not
+return the student who has never taken any exam.
+Return the result table ordered by student_id.
+
+A:
+
+		WITH cte AS
+		(SELECT 
+			CASE
+				WHEN e.score=MAX(score) OVER(PARTITION BY exam_id) OR 
+					 e.score=MIN(score) OVER(PARTITION BY exam_id) THEN s.student_id 
+				END AS max_min_student_id
+		FROM student2 s INNER JOIN exam e
+		ON s.student_id=e.student_id)
+
+		SELECT DISTINCT
+		    s.student_id, s.student_name
+		FROM
+		    student2 s
+			INNER JOIN
+		    exam e ON s.student_id = e.student_id
+		WHERE
+		    s.student_id NOT IN (SELECT DISTINCT
+			    IFNULL(max_min_student_id, 0)
+			FROM
+			    cte);
+			    
+Q95. same as Q94
+
+Q96. Write a query to output the user id, song id, and cumulative count of song plays as of 4 August 2022
+sorted in descending order.
+
+A:
+
+		WITH cte AS
+		(SELECT 
+		    user_id, song_id, song_plays
+		FROM
+		    songs_history 
+		UNION SELECT 
+		    user_id, song_id, COUNT(*) AS song_plays
+		FROM
+		    songs_weekly
+		WHERE
+		    DATE(listen_time) <= '2022-08-04'
+		GROUP BY user_id , song_id)
+
+		SELECT 
+		    user_id, song_id, SUM(song_plays) AS song_plays
+		FROM
+		    cte
+		GROUP BY user_id , song_id
+		ORDER BY song_plays DESC;
+		    
+Q97. Write a query to find the confirmation rate of users who confirmed their signups with text messages.
+Round the result to 2 decimal places.
+
+A:
+
+		SELECT 
+		    ROUND(SUM(CASE
+				WHEN signup_action = 'Confirmed' THEN 1
+				ELSE 0
+			    END) / COUNT(DISTINCT user_id),
+			    2) AS confirm_rate
+		FROM
+		    emails e
+			LEFT JOIN
+		    texts t ON e.email_id = t.email_id;
+		    
+Q98. 
+
 
 
 
