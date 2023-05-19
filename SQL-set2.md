@@ -746,7 +746,41 @@ A:
 		ON cte1.pay_month=cte2.pay_month
 		ORDER BY 2,1;
 		
-Q92. 
+Q92. Write an SQL query to report for each install date, the number of players that installed the game on
+that day, and the day one retention.
+Return the result table in any order.
+
+A:
+
+		WITH cte1 AS
+		(SELECT 
+		    player_id, MIN(event_date) AS installed_on
+		FROM
+		    Activity4
+		GROUP BY player_id)
+
+		SELECT 
+		    installed_on AS installed_dt,
+		    COUNT(installed_on) AS installs,
+		    ROUND(COUNT(event_date) / COUNT(installed_on),
+			    2) AS Day1_retention
+		FROM
+		    (SELECT 
+			c.player_id, c.installed_on, a.event_date
+		    FROM
+			cte1 c
+		    LEFT JOIN Activity4 a ON DATE_ADD(installed_on, INTERVAL 1 DAY) = a.event_date
+			AND c.player_id = a.player_id) temp
+		GROUP BY installed_on;
+		
+Q93. Write an SQL query to find the winner in each group.
+Return the result table in any order.
+
+A:
+
+
+
+
 
 
 
