@@ -869,7 +869,28 @@ A:
 			LEFT JOIN
 		    texts t ON e.email_id = t.email_id;
 		    
-Q98. 
+Q98. Calculate the 3-day
+rolling average of tweets published by each user for each date that a tweet was posted. Output the
+user id, tweet date, and rolling averages rounded to 2 decimal places.
+
+A:
+
+		SELECT 
+			user_id,
+		    tweet_date,
+			ROUND(AVG(COUNT(*)) 
+				OVER(PARTITION BY user_id ORDER BY tweet_date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW),2) 
+			AS rolling_avg_3days
+		FROM tweets 
+		GROUP BY user_id,tweet_date;
+		
+Q99. Write a query to obtain a breakdown of the time spent
+sending vs. opening snaps (as a percentage of total time spent on these activities) for each age
+group.
+
+A:
+
+
 
 
 
