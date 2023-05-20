@@ -890,6 +890,50 @@ group.
 
 A:
 
+		SELECT 
+		    age_bucket,
+		    ROUND(sending_time * 100.0 / (opening_time + sending_time),
+			    2) AS send_perc,
+		    ROUND(opening_time * 100.0 / (opening_time + sending_time),
+			    2) AS open_perc
+		FROM
+		    (SELECT 
+			age_bucket,
+			    SUM(CASE
+				WHEN activity_type = 'open' THEN time_spent
+			    END) AS opening_time,
+			    SUM(CASE
+				WHEN activity_type = 'send' THEN time_spent
+			    END) AS sending_time
+		    FROM
+			activities a
+		    INNER JOIN age_breakdown b ON a.user_id = b.user_id
+		    WHERE
+			activity_type IN ('send' , 'open')
+		    GROUP BY age_bucket) temp
+		ORDER BY age_bucket;
+		
+Q100. Write a query to return the IDs of these LinkedIn power creators in ascending order.
+
+A:
+
+		SELECT 
+		    profile_id
+		FROM
+		    (SELECT 
+			p.profile_id,
+			    p.name,
+			    p.followers AS profile_followers,
+			    MAX(c.followers) AS company_followers
+		    FROM
+			personal_profiles p
+		    INNER JOIN employee_company e ON p.profile_id = e.personal_profile_id
+		    INNER JOIN company_pages c ON e.company_id = c.company_id
+		    GROUP BY p.profile_id , p.name , p.followers) temp
+		WHERE
+		    profile_followers > company_followers
+		ORDER BY profile_id;
+
 
 
 
