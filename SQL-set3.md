@@ -813,7 +813,91 @@ A:
                     GROUP BY c.company_code , c.founder
                     ORDER BY c.company_code;
                     
- Q143. 
+Q143. You are given a table, Functions, containing two columns: X and Y.
+Two pairs (X1, Y1) and (X2, Y2) are said to be symmetric pairs if X1 = Y2 and X2 = Y1.
+Write a query to output all such symmetric pairs in ascending order by the value of X. List the rows
+such that X1 ≤ Y1.
+
+A:
+
+			SELECT 
+			    X, Y
+			FROM
+			    (SELECT 
+				X, Y
+			    FROM
+				Functions
+			    WHERE
+				X = Y
+			    GROUP BY X , Y
+			    HAVING COUNT(*) = 2 UNION SELECT 
+				f1.X, f1.Y
+			    FROM
+				Functions f1, Functions f2
+			    WHERE
+				f1.X < f1.Y AND f1.X = f2.Y
+				    AND f2.X = f1.Y) t
+			ORDER BY X , Y;
+			
+Q144. Write a query to output the names of those students whose best friends got offered a higher salary
+than them. Names must be ordered by the salary amount offered to the best friends. It is guaranteed
+that no two students get the same salary offer.
+
+A:
+
+			WITH student_salary AS
+			(SELECT 
+			    s.ID, Name, Salary AS stu_salary
+			FROM
+			    Students4 s
+				INNER JOIN
+			    Packages p ON s.ID = p.ID),
+			friend_salary AS
+			(SELECT 
+			    f.ID, f.Friend_ID, Salary AS frd_salary
+			FROM
+			    Friends f
+				INNER JOIN
+			    Packages p ON f.Friend_ID = p.ID)
+
+			SELECT 
+			    Name
+			FROM
+			    student_salary ss
+				INNER JOIN
+			    friend_salary fs ON ss.ID = fs.ID
+			WHERE
+			    frd_salary > stu_salary
+			ORDER BY frd_salary;
+			
+Q145. Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard!
+Write a query to print the respective hacker_id and name of hackers who achieved full scores for more
+than one challenge. Order your output in descending order by the total number of challenges in which
+the hacker earned a full score. If more than one hacker received full scores in the same number of
+challenges, then sort them by ascending hacker_id.
+
+A:
+
+			SELECT 
+			    h.hacker_id, h.name
+			FROM
+			    Submissions s
+				INNER JOIN
+			    Challenges c ON s.challenge_id = c.challenge_id
+				INNER JOIN
+			    Difficulty d ON c.difficulty_level = d.difficulty_level
+				INNER JOIN
+			    Hackers h ON s.hacker_id = h.hacker_id
+			WHERE
+			    s.score = d.score
+				AND c.difficulty_level = d.difficulty_level
+			GROUP BY h.hacker_id , h.name
+			HAVING COUNT(s.hacker_id) > 1
+			ORDER BY COUNT(s.hacker_id) DESC , h.hacker_id;
+			
+Q146. 
+
+
 
 
 
