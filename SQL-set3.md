@@ -893,9 +893,115 @@ A:
 				AND c.difficulty_level = d.difficulty_level
 			GROUP BY h.hacker_id , h.name
 			HAVING COUNT(s.hacker_id) > 1
-			ORDER BY COUNT(s.hacker_id) DESC , h.hacker_id;
+			ORDER BY COUNT(s.hacker_id) DESC , h.hacker_id;                                                                            
 			
-Q146. 
+Q146. Write a query to output the start and end dates of projects listed by the number of days it took to
+complete the project in ascending order. If there is more than one project that have the same number
+of completion days, then order by the start date of the project.
+
+A:
+
+			SELECT 
+			    start_date, MIN(end_date) AS end_date
+			FROM
+			    (SELECT 
+				start_date
+			    FROM
+				Projects2
+			    WHERE
+				start_date NOT IN (SELECT 
+					end_date
+				    FROM
+					projects2)) s,
+			    (SELECT 
+				end_date
+			    FROM
+				projects2
+			    WHERE
+				end_date NOT IN (SELECT 
+					start_date
+				    FROM
+					projects2)) e
+			WHERE
+			    start_date < end_date
+			GROUP BY start_date
+			ORDER BY DATEDIFF(MIN(end_date), start_date) , start_date;
+			
+Q147. In an effort to identify high-value customers, Amazon asked for your help to obtain data about users
+who go on shopping sprees. A shopping spree occurs when a user makes purchases on 3 or more
+consecutive days.
+List the user IDs who have gone on at least 1 shopping spree in ascending order.
+
+A:
+
+Q148. You are given a table of PayPal payments showing the payer, the recipient, and the amount paid. A
+two-way unique relationship is established when two people send money back and forth. Write a
+query to find the number of two-way unique relationships in this data.
+
+A:
+
+			SELECT 
+			    COUNT(DISTINCT p1.payer_id, p1.recipient_id) AS unique_relationships
+			FROM
+			    payments p1
+				INNER JOIN
+			    payments p2
+			WHERE
+			    p1.payer_id = p2.recipient_id
+				AND p1.recipient_id = p2.payer_id
+				AND p1.payer_id < p1.recipient_id;
+				
+Q149. Assume you are given the table below on user transactions. Write a query to obtain the list of
+customers whose first transaction was valued at $50 or more. Output the number of users.
+
+A:
+
+			SELECT 
+				COUNT(user_id) AS users 
+			FROM
+				(SELECT 
+					*,
+					FIRST_VALUE(transaction_date) OVER(PARTITION BY user_id ORDER BY transaction_date) AS first_trans
+				FROM user_transactions4) f 
+				WHERE transaction_date=first_trans AND spend>=50;
+
+Q150. Assume you are given the table below containing measurement values obtained from a sensor over
+several days. Measurements are taken several times within a given day.
+Write a query to obtain the sum of the odd-numbered and even-numbered measurements on a
+particular day, in two different columns.
+Note that the 1st, 3rd, 5th measurements within a day are considered odd-numbered measurements
+and the 2nd, 4th, 6th measurements are even-numbered measurements.
+
+A:
+
+			SELECT 
+				DATE(measurement_time) AS measurement_day,
+				ROUND(SUM(CASE WHEN rn%2<>0 THEN measurement_value END),2) AS odd_sum,
+				ROUND(SUM(CASE WHEN rn%2=0 THEN measurement_value END),2) AS even_sum
+			FROM
+				(SELECT 
+					*,	
+				ROW_NUMBER() OVER(PARTITION BY DATE(measurement_time)) AS rn 
+				FROM measurements)m
+			GROUP BY DATE(measurement_time);
+			
+Q151. 
+
+A:
+
+Q152. The Airbnb Booking Recommendations team is trying to understand the "substitutability" of two
+rentals and whether one rental is a good substitute for another. They want you to write a query to find
+the unique combination of two Airbnb rentals with the same exact amenities offered.
+Output the count of the unique combination of Airbnb rentals.
+
+A:
+
+
+
+
+
+
+
 
 
 
