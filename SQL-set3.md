@@ -996,6 +996,33 @@ Output the count of the unique combination of Airbnb rentals.
 
 A:
 
+			WITH cte AS
+			(SELECT 
+			    rental_id,
+			    GROUP_CONCAT(amenity
+				ORDER BY amenity) AS amenities
+			FROM
+			    rental_amenities
+			GROUP BY rental_id)
+
+			SELECT COUNT(*) AS matching_airbnb FROM 
+			(SELECT 
+			    c1.rental_id, c1.amenities
+			FROM
+			    cte c1
+				INNER JOIN
+			    cte c2 ON c1.amenities = c2.amenities
+				AND c1.rental_id <> c2.rental_id
+				AND c1.rental_id < c2.rental_id) temp
+
+Q153. Google marketing managers are analysing the performance of various advertising accounts over the
+last month. They need your help to gather the relevant data.
+Write a query to calculate the return on ad spend (ROAS) for each advertiser across all ad campaigns.
+Round your answer to 2 decimal places, and order your output by the advertiser_id.
+
+A:
+
+
 
 
 
