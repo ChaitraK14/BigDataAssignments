@@ -1022,6 +1022,130 @@ Round your answer to 2 decimal places, and order your output by the advertiser_i
 
 A:
 
+			SELECT 
+			    advertiser_id, ROUND(SUM(revenue) / SUM(spend), 2) AS ROAS
+			FROM
+			    ad_campaign
+			GROUP BY advertiser_id
+			ORDER BY advertiser_id;
+			
+Q154. Your team at Accenture is helping a Fortune 500 client revamp their compensation and benefits
+program. The first step in this analysis is to manually review employees who are potentially overpaid
+or underpaid.
+An employee is considered to be potentially overpaid if they earn more than 2 times the average salary
+for people with the same title. Similarly, an employee might be underpaid if they earn less than half of
+the average for their title. We'll refer to employees who are both underpaid and overpaid as
+compensation outliers for the purposes of this problem.
+Write a query that shows the following data for each compensation outlier: employee ID, salary, and
+whether they are potentially overpaid or potentially underpaid.
+
+A:
+
+			WITH average_salary AS
+			(SELECT 
+				*,	
+			    AVG(salary) OVER(PARTITION BY title) AS avg_sal 
+			FROM employee_pay)
+
+			SELECT 
+			    employee_id,
+			    salary,
+			    CASE
+				WHEN salary > 2 * avg_sal THEN 'Overpaid'
+				WHEN salary < 0.5 * avg_sal THEN 'Underpaid'
+			    END AS status
+			FROM
+			    average_salary
+			WHERE
+			    salary > 2 * avg_sal
+				OR salary < 0.5 * avg_sal;
+				
+Q155. You are given a table of PayPal payments showing the payer, the recipient, and the amount paid. A
+two-way unique relationship is established when two people send money back and forth. Write a
+query to find the number of two-way unique relationships in this data.
+
+A:
+
+			SELECT 
+			    COUNT(DISTINCT p1.payer_id, p1.recipient_id) AS unique_relationships
+			FROM
+			    payments p1
+				INNER JOIN
+			    payments p2
+			WHERE
+			    p1.payer_id = p2.recipient_id
+				AND p1.recipient_id = p2.payer_id
+				AND p1.payer_id < p1.recipient_id;
+				
+Q156. Assume you are given the table below containing information on user purchases. Write a query to
+obtain the number of users who purchased the same product on two or more different days. Output
+the number of unique users.
+
+A:
+
+			WITH repeat_purchase AS
+			(SELECT 
+			    COUNT(DISTINCT DATE(purchase_date))
+			FROM
+			    purchases
+			GROUP BY user_id , product_id
+			HAVING COUNT(DISTINCT DATE(purchase_date)) > 1)
+
+			SELECT 
+			    COUNT(*) AS repeat_purchases
+			FROM
+			    repeat_purchase;
+			    
+Q157. Say you have access to all the transactions for a given merchant account. Write a query to print the
+cumulative balance of the merchant account at the end of each day, with the total balance reset back
+to zero at the end of the month. Output the transaction date and cumulative balance.
+
+A:
+
+			WITH cte AS
+			(SELECT 
+			    *,
+			    CASE
+				WHEN type = 'withdrawal' THEN ROUND(amount * - 1, 2)
+				ELSE ROUND(amount, 2)
+			    END AS amount_sign
+			FROM
+			    transactions5)
+
+			SELECT 
+				transaction_date,balance 
+			FROM
+				(SELECT 
+					*,	
+				SUM(amount_sign) OVER(PARTITION BY MONTH(transaction_date) ORDER BY transaction_date) AS balance
+				FROM cte) b
+			GROUP BY transaction_date,balance;
+			
+Q158. Assume you are given the table below containing information on Amazon customers and their spend
+on products belonging to various categories. Identify the top two highest-grossing products within
+each category in 2022. Output the category, product, and total spend.
+
+A:
+
+			SELECT 
+				category,
+				product,
+			    total_spend
+			FROM
+				(SELECT 
+					category,
+					product,
+					ROUND(SUM(spend),2) AS total_spend,
+					RANK() OVER(PARTITION BY category ORDER BY ROUND(SUM(spend),2) DESC) AS r
+				FROM product_spend
+				WHERE YEAR(transaction_date)='2022'
+				GROUP BY category,product) t
+			WHERE r<=2;
+			
+Q159. 
+
+
+
 
 
 
