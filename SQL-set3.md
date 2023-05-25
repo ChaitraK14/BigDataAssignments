@@ -211,6 +211,19 @@ and use the ampersand () character as your separator (instead of a space).
 
 A:
 
+		select listagg(Prime_Number,'&') within group(order by Prime_Number)
+		from (select L Prime_Number from
+		     (select Level L 
+		     from Dual
+		     connect by Level <= 1000),
+		     (select Level M
+		     from Dual
+		     connect by Level <= 1000)
+		     where M <= L
+		     group by L
+		     having count(case when L/M = trunc(L/M) then 'Y' end) = 2
+		     order by L);
+
 Q113. P(R) represents a pattern drawn by Julia in R rows. The following pattern represents P(5):
 *
 * *
@@ -218,6 +231,10 @@ Q113. P(R) represents a pattern drawn by Julia in R rows. The following pattern 
 * * * *
 * * * * *
 Write a query to print the pattern P(20).
+
+A:
+
+		SELECT SYS_CONNECT_BY_PATH(NULL, '* ') FROM DUAL CONNECT BY ROWNUM <= 20 ORDER BY 1 DESC;
 
 A:
 
@@ -230,6 +247,13 @@ Q114. P(R) represents a pattern drawn by Julia in R rows. The following pattern 
 Write a query to print the pattern P(20).
 
 A:
+
+		SELECT SYS_CONNECT_BY_PATH(NULL, '* ') FROM DUAL CONNECT BY ROWNUM <= 20 ORDER BY 1 DESC;
+		SET @no_of_lines = 5 + 1;
+
+		SELECT REPEAT('* ', @no_of_lines := @no_of_lines -1) 
+		FROM INFORMATION_SCHEMA.TABLES
+		WHERE @no_of_lines > 0;
 
 Q115. Query the Name of any student in STUDENTS who scored higher than 75 Marks. Order your output by
 the last three characters of each name. If two or more students both have names ending in the same
@@ -348,6 +372,21 @@ and the number of monthly active users (MAUs).
 
 A:
 
+			SELECT 
+			  EXTRACT(MONTH FROM curr_month.event_date) AS month, 
+			  COUNT(DISTINCT curr_month.user_id) AS monthly_active_users 
+			FROM user_actions AS curr_month
+			WHERE EXISTS (
+			  SELECT last_month.user_id 
+			  FROM user_actions AS last_month
+			  WHERE last_month.user_id = curr_month.user_id
+			    AND EXTRACT(MONTH FROM last_month.event_date) =
+			    EXTRACT(MONTH FROM curr_month.event_date - interval 1 month)
+			)
+			  AND EXTRACT(MONTH FROM curr_month.event_date) = 6
+			  AND EXTRACT(YEAR FROM curr_month.event_date) = 2022
+			GROUP BY EXTRACT(MONTH FROM curr_month.event_date);
+
 Q122. Google's marketing team is making a Superbowl commercial and needs a simple statistic to
 put on their TV ad: the median number of searches a person made last year.
 However, at Google scale, querying the 2 trillion searches is too costly. Luckily, you have access to the
@@ -357,6 +396,21 @@ Write a query to report the median of searches made by a user. Round the median 
 point.
 
 A:
+
+			WITH cte AS 
+			(SELECT 
+				*,
+			    SUM(num_users) OVER(ORDER BY searches) as running_sum , 
+			    SUM(num_users) OVER () usersum
+			FROM 
+				search_frequency )
+
+			SELECT 
+			    ROUND(SUM(searches) * 1.0 / 2, 1) AS median
+			FROM
+			    cte
+			WHERE
+			    usersum / 2.0 BETWEEN (running_sum - num_users) AND running_sum;
 
 Q123. Write a query to update the Facebook advertiser's status using the daily_pay table. Advertiser is
 a two-column table containing the user id and their payment status based on the last payment and
@@ -934,6 +988,20 @@ List the user IDs who have gone on at least 1 shopping spree in ascending order.
 
 A:
 
+			WITH cte AS (
+			SELECT *,RANK()OVER(PARTITION BY user_id ORDER BY transaction_date) as r,
+			first_value(transaction_date)OVER(PARTITION BY user_id ORDER BY transaction_date) as s_date ,
+			last_value(transaction_date)OVER(PARTITION BY user_id ORDER BY transaction_date) as e_date
+			FROM transactions4
+			)
+			SELECT 
+			    user_id
+			FROM
+			    cte
+			WHERE
+			    (EXTRACT(DAY FROM e_date) - EXTRACT(DAY FROM s_date)) + 1 = 3
+				AND r = 3;
+
 Q148. You are given a table of PayPal payments showing the payer, the recipient, and the amount paid. A
 two-way unique relationship is established when two people send money back and forth. Write a
 query to find the number of two-way unique relationships in this data.
@@ -985,9 +1053,7 @@ A:
 				FROM measurements)m
 			GROUP BY DATE(measurement_time);
 			
-Q151. 
-
-A:
+Q151. Same as Q147.
 
 Q152. The Airbnb Booking Recommendations team is trying to understand the "substitutability" of two
 rentals and whether one rental is a good substitute for another. They want you to write a query to find
