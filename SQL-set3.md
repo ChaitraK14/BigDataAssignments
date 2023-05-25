@@ -1142,7 +1142,30 @@ A:
 				GROUP BY category,product) t
 			WHERE r<=2;
 			
-Q159. 
+Q159. Facebook is analysing its user signup data for June 2022. Write a query to generate the churn rate by
+week in June 2022. Output the week number (1, 2, 3, 4, ...) and the corresponding churn rate rounded
+to 2 decimal places.
+For example, week number 1 represents the dates from 30 May to 5 Jun, and week 2 is from 6 Jun to
+12 Jun.
+
+A:
+
+			WITH churn AS
+			(SELECT 
+			    *,
+			    WEEK(signup_date) - WEEK('2022-05-28') AS signup_week,
+			    IF(DATEDIFF(last_login, signup_date) < 28,
+				1,
+				0) AS churn
+			FROM
+			    users4)
+
+			SELECT 
+			    signup_week,
+			    ROUND(SUM(churn) * 100 / COUNT(*), 2) AS churn_rate
+			FROM
+			    churn
+			GROUP BY signup_week;
 
 
 
