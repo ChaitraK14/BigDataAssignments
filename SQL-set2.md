@@ -557,10 +557,40 @@ number of monthly active users (MAUs).
 
 A:
 
+		SELECT 
+		  EXTRACT(MONTH FROM curr_month.event_date) AS month, 
+		  COUNT(DISTINCT curr_month.user_id) AS monthly_active_users 
+		FROM user_actions AS curr_month
+		WHERE EXISTS (
+		  SELECT last_month.user_id 
+		  FROM user_actions AS last_month
+		  WHERE last_month.user_id = curr_month.user_id
+		    AND EXTRACT(MONTH FROM last_month.event_date) =
+		    EXTRACT(MONTH FROM curr_month.event_date - interval 1 month)
+		)
+		  AND EXTRACT(MONTH FROM curr_month.event_date) = 6
+		  AND EXTRACT(YEAR FROM curr_month.event_date) = 2022
+		GROUP BY EXTRACT(MONTH FROM curr_month.event_date);
+
 Q83. Write a query to report the median of searches made by a user. Round the median to one decimal
 point.
 
 A:
+
+		WITH cte AS 
+		(SELECT 
+			*,
+		    SUM(num_users) OVER(ORDER BY searches) as running_sum , 
+		    SUM(num_users) OVER () usersum
+		FROM 
+			search_frequency )
+
+		SELECT 
+		    ROUND(SUM(searches) * 1.0 / 2, 1) AS median
+		FROM
+		    cte
+		WHERE
+		    usersum / 2.0 BETWEEN (running_sum - num_users) AND running_sum;
 
 Q84. Write a query to update the Facebook advertiser's status using the daily_pay table. Advertiser is a
 two-column table containing the user id and their payment status based on the last payment and
