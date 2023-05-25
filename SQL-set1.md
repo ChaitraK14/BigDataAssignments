@@ -435,12 +435,7 @@ A:
 		    NPV n ON n.id = q.id AND n.year = q.year
 		ORDER BY q.id , q.year;
 		
-Q31. Write an SQL query to find the npv of each query of the Queries table.
-Return the result table in any order.
-
-A:
-
-		Same
+Q31. Same as Q30
 		
 Q32. Write an SQL query to show the unique ID of each user, If a user does not have a unique ID replace just
 show null.
@@ -714,6 +709,21 @@ excluding books that have been available for less than one month from today. Ass
 Return the result table in any order.
 
 A:
+
+		SELECT 
+		    book_id, name
+		FROM
+		    books
+		WHERE
+		    book_id NOT IN (SELECT 
+			    book_id
+			FROM
+			    orders3
+			WHERE
+			    (dispatch_date BETWEEN DATE_SUB('2019-06-23', INTERVAL 1 YEAR) AND '2019-06-23')
+			GROUP BY (book_id)
+			HAVING SUM(quantity) >= 10)
+			AND available_from < DATE_SUB('2019-06-23', INTERVAL 1 MONTH)
 
 Q49. Write a SQL query to find the highest grade with its corresponding course for each student. In case of
 a tie, you should find the course with the smallest course_id.
